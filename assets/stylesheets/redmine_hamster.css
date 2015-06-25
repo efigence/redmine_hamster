@@ -1,0 +1,24 @@
+.btn-action a, input {
+  background-color: #ededed;
+  border-radius: 5px;
+  border: 1px solid #dcdcdc;
+  color: #565659 !important;
+  font-family: arial;
+  font-size: 11px;
+  font-weight: bold;
+  font-style: normal;
+  /*width: 75px;*/
+  padding: 3px 10px;
+  text-decoration:none !important;
+  text-align: center;
+  text-shadow: 1px 1px 0px #ffffff;
+}
+.spend_time input {
+  width: 40px;
+}
+.action-save {
+  display: none;
+}
+.remove-action {
+  display: none;
+}

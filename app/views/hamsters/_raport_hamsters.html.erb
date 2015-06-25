@@ -1,0 +1,42 @@
+<h3><%=l(:field_ready_to_raport)%></h3>
+<% if items && items.any? %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th><%=l(:field_project)%></th>
+        <th><%=l(:field_tracker)%></th>
+        <th><%=l(:field_subject)%></th>
+        <th><%=l(:field_spend_time)%></th>
+        <th></th>
+      </tr>
+    </thead>
+    
+    <% items.keys.sort.each do |day| %>
+      <tbody style="padding-bottom: 2px;">
+        <tr id="<%= day %>" class="">
+          <th class="date" colspan="5"><%=day%></th>
+        </tr>
+        <% for item in items[day] %>
+          <%= form_for item, :remote => true do |f| %>
+            <% issue = Issue.find(item.issue_id) %>
+            <tr id="<%= day %>" class="list-hamsters">            
+              <td class="project"><%= issue.project %></td>
+              <td class="tracker"><%= issue.tracker %></td>
+              <td class="subject">(#<%= issue.id %>)<%= issue.subject.truncate(60) %></td>
+              <td class="spend_time"><%= f.text_field :spend_time %> H</td>
+              
+              <td class='raport-action btn-action'>
+                <%= link_to l(:button_raport), "#" %>
+                <%= f.submit l(:button_save), class: 'action-save' %>
+              </td>
+              <td class='remove-action'><%= link_to '', item, method: :delete, remote: true, :class => 'icon icon-del' %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <% end %>
+    
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

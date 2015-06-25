@@ -1,3 +1,9 @@
-# English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  label_hamster: Hamster
+  field_spend_time: Spend time
+  field_start_at: Start at
+  field_started_issues: Started issues
+  field_ready_to_raport: Issue ready to raport
+  button_raport: Raport
+  button_start: Start
+  button_stop: Stop

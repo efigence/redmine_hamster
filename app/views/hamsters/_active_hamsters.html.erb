@@ -1,0 +1,24 @@
+<h3><%=l(:field_started_issues)%></h3>
+<% if items && items.any? %>
+  <table class="list">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Issue ID</th>
+        <th><%=l(:field_start_at)%></th>
+      </tr>
+    </thead>
+    <tbody>
+    <% for item in items %>
+      <tr id="item-<%= item.id %>" class="">
+        <td class="id"><%= item.id %></td>
+        <td class="issue"><%= item.issue_id %></td>
+        <td class="start-at"><%= item.start_at.to_s(:db) %></td>
+        <td class='project btn-action'><%= link_to l(:button_stop), hamsters_stop_path(hamster_issue_id: item), method: 'post' %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

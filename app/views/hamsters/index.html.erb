@@ -1,0 +1,22 @@
+<% issues = Issue.my_open.to_a %>
+
+<div id="list-left" class="splitcontentleft">
+  <div class="mypage-box">
+    <%= render :partial => 'hamsters/issues_list', locals: {issues: issues} %>
+  </div>
+</div>
+
+<div id="list-right" class="splitcontentright">
+  <div class="mypage-box">
+    <%= render :partial => 'hamsters/active_hamsters', locals: {items: @active_hamsters} %>
+  </div>
+  <div class="mypage-box">
+    <%= render :partial => 'hamsters/raport_hamsters', locals: {items: @raport_hamsters} %>
+  </div>
+</div>
+
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'redmine_hamster', :plugin => 'redmine_hamster', :media => 'all' %>
+  <%= javascript_include_tag 'redmine_hamster',  :plugin => 'redmine_hamster' %>
+<% end %>
