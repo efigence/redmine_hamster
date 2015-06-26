@@ -4,7 +4,7 @@ class HamstersController < ApplicationController
   before_action :find_issue,   only: [:start]
   before_action :find_hamster, only: [:update, :destroy]
   before_action :find_hamster_issue, only: [:stop]
-
+  before_action :prepare_data, only: [:raport_time]
 
   def index
     @active_hamsters = HamsterIssue.my
@@ -29,10 +29,29 @@ class HamstersController < ApplicationController
     @hamster.destroy
   end
 
+  def raport_time
+    time_entry = TimeEntry.new(:project => @project, :issue => @issue, :user => User.current, :spent_on => @date)
+    time_entry.safe_attributes = params[:time_entry]
+
+    if time_entry.project && !User.current.allowed_to?(:log_time, time_entry.project)
+      render_403
+      return
+    end
+
+    if time_entry.save
+      @hamster.destroy!
+    else
+      respond_to do |format|
+        format.html { render :action => 'index' }
+        format.api  { render_validation_errors(time_entry) }
+      end
+    end
+  end
+
   private
 
   def find_issue
-    @issue = Issue.my_open.find(params[:issue_id])
+    @issue = Issue.find(params[:issue_id])
   end
 
   def find_hamster_issue
@@ -41,6 +60,13 @@ class HamstersController < ApplicationController
 
   def find_hamster
     @hamster = Hamster.my.find(params[:id])
+  end
+
+  def prepare_data
+    @issue = Issue.find(params[:time_entry][:issue_id])
+    @project = @issue.project
+    @date = params[:time_entry][:spent_on]
+    @hamster =  Hamster.my.find(params[:time_entry][:hamster_id])
   end
 
 end

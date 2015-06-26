@@ -13,12 +13,15 @@
   text-align: center;
   text-shadow: 1px 1px 0px #ffffff;
 }
-.spend_time input {
+#hamster_spend_time {
   width: 40px;
 }
 .action-save {
   display: none;
 }
 .remove-action {
-  display: none;
+  /*display: none;*/
+}
+.error {
+  border: 1px solid red;
 }
