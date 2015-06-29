@@ -1,5 +1,8 @@
 en:
   label_hamster: Hamster
+  label_working_hours: Working hours
+  label_start_at: Start at
+  label_end_at: End at
   field_spend_time: Spend time
   field_start_at: Start at
   field_started_issues: Started issues
@@ -7,3 +10,9 @@ en:
   button_raport: Raport
   button_start: Start
   button_stop: Stop
+  notice_account_work_time: Working time is invalid
+  settings:
+    allowed_groups_to_use_hamster: Groups allowed to use Hamster
+    default_working_hours: Set default working hours
+    default_start_at: Start at
+    default_end_at: End at

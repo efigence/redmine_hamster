@@ -1,0 +1,22 @@
+<%= stylesheet_link_tag '/plugin_assets/redmine_hamster/stylesheets/selectize.default.css' %>
+<%= javascript_include_tag '/plugin_assets/redmine_hamster/javascripts/selectize' %>
+<p>
+  <label><%= l('settings.allowed_groups_to_use_hamster') %></label>
+    <%= select_tag "settings[groups][]",
+      options_from_collection_for_select(Group.all.sort, 'id', 'lastname', @settings['groups']
+        ), :multiple => true, class: "selectize" %>
+
+</p>
+<p>
+<style>
+  div.box {
+    overflow: initial;
+  }
+</style>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.selectize').selectize({
+      plugins: ['remove_button']
+    });
+  });
+</script>

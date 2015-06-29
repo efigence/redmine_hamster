@@ -8,7 +8,7 @@ class HamstersController < ApplicationController
 
   def index
     @active_hamsters = HamsterIssue.my
-    @raport_hamsters = Hamster.my.group_by {|h| h.created_at.to_date }
+    @raport_hamsters = Hamster.my.group_by {|h| h.start_at.to_date }
   end
 
   def start

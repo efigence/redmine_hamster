@@ -4,14 +4,14 @@ class Hamster < ActiveRecord::Base
 
   scope :my, -> { where(user_id: User.current.id) }
 
-  def self.create_or_update(end_time, spend_time, issue_id, user_id)
-    hamster = Hamster.my.where("created_at >= ? AND issue_id = ?", Time.zone.now.beginning_of_day, issue_id) # created today
+  def self.create_or_update(start_date, end_time, spend_time, issue_id, user_id)
+    hamster = Hamster.my.where(start_at: start_date.beginning_of_day..start_date.end_of_day, issue_id: issue_id) # created today
     if hamster.any?
       hamster = hamster.first
       time = (hamster.spend_time + spend_time).round(2)
       hamster.update_attributes(end_time: end_time, spend_time: time)
     else
-      Hamster.create(user_id: user_id, issue_id: issue_id, end_time: end_time, spend_time: spend_time)
+      Hamster.create(user_id: user_id, issue_id: issue_id, start_at: start_date, end_time: end_time, spend_time: spend_time)
     end
   end
 

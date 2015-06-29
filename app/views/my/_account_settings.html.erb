@@ -1,0 +1,18 @@
+<% start_at = User.current.work_time.blank? ? nil : User.current.work_time.start_at.strftime('%H:%M') %>
+<% end_at = User.current.work_time.blank? ? nil : User.current.work_time.end_at.strftime('%H:%M') %>
+
+<fieldset class="box tabular">
+  <legend><%=l(:label_working_hours)%></legend>
+  <p>
+    <label><%=l(:label_start_at)%></label>
+    <%= text_field_tag :start_at, start_at,  {id: 'start_at', class: 'timepicker'} %><br/>
+    <label><%=l(:label_end_at)%></label>
+    <%= text_field_tag :end_at, end_at, {id: 'end_at', class: 'timepicker'} %>
+  </p>
+</fieldset>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'jquery.timepicker', :plugin => 'redmine_hamster', :media => 'all' %>
+  <%= javascript_include_tag 'jquery.timepicker',  :plugin => 'redmine_hamster' %>
+  <%= javascript_include_tag 'my',  :plugin => 'redmine_hamster' %>
+<% end %>

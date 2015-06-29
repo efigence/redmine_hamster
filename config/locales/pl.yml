@@ -1,5 +1,8 @@
 pl:
   label_hamster: Hamster
+  label_working_hours: Godziny pracy
+  label_start_at: Godzina rozpoczęcia
+  label_end_at: Godzina zakończenia
   field_spend_time: Spędzony czas
   field_start_at: Data rozpoczęcia
   field_started_issues: Rozpoczęte zagadnienia
@@ -7,3 +10,9 @@ pl:
   button_raport: Zaraportuj
   button_start: Rozpocznij
   button_stop: Zakończ
+  notice_account_work_time: Czas pracy jest nieprawidłowy
+  settings:
+    allowed_groups_to_use_hamster: 'Grupy uprawnione do używania Hamster-a'
+    default_working_hours: Określ domyślne godziny pracy
+    default_start_at: Rozpoczęcie
+    default_end_at: Zakończenie
