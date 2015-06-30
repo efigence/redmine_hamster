@@ -1,0 +1,28 @@
+language: ruby
+cache:
+  apt: true
+  bundler: true
+  directories:
+    - vendor/bundle
+    - workspace/redmine/vendor/bundle
+rvm:
+  - 2.1
+  - 2.0
+env:
+  - REDMINE_VERSION=2.6.5 VERBOSE=no DB=mysql
+  - REDMINE_VERSION=3.0.3 VERBOSE=no DB=mysql
+
+script:
+  - export PLUGIN=redmine_hamster
+  - export WORKSPACE=$(pwd)/workspace
+  - export PATH_TO_PLUGIN=$(pwd)
+  - export PATH_TO_REDMINE=$WORKSPACE/redmine
+  - export BUNDLE_PATH=$(pwd)/vendor/bundle
+  - mkdir -p $WORKSPACE
+  - bash -x ./.travis-init.sh -r || exit 1
+  - bash -x ./.travis-init.sh -i || exit 1
+  - bash -x ./.travis-init.sh -t || exit 1
+  - bash -x ./.travis-init.sh -u || exit 1
+before_script:
+  - mysql -e 'create database redmine_hamster_test;'
+
