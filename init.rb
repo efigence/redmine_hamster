@@ -1,10 +1,11 @@
+# encoding: utf-8
 Redmine::Plugin.register :redmine_hamster do
   name 'Redmine Hamster plugin'
-  author 'Author name'
-  description 'This is a plugin for Redmine'
+  author 'Marcin Świątkiewicz'
+  description "Plugin helps users to control spent time on issue."
   version '0.0.1'
-  url 'http://example.com/path/to/plugin'
-  author_url 'http://example.com/about'
+  url 'https://github.com/efigence/redmine_hamster'
+  author_url 'http://www.efigence.com/'
 
   menu :top_menu,
     :hamster, { controller: 'hamsters', action: 'index'},
