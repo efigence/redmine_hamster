@@ -10,12 +10,10 @@ Redmine::Plugin.register :redmine_hamster do
   menu :top_menu,
     :hamster, { controller: 'hamsters', action: 'index'},
     caption: :label_hamster, :after => :help,
-    :if => proc { User.current.logged? }
-  
+    :if => proc { User.current.logged? && (User.current.admin? || User.current.has_access?) }
+
   settings :default => {
-    'group' => [],
-    'start_at' => '09:00',
-    'end_at' => '17:00'
+    'groups' => []
   }, :partial => 'settings/redmine_hamster_settings'
 
   ActionDispatch::Callbacks.to_prepare do

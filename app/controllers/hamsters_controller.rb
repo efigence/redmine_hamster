@@ -1,6 +1,7 @@
 class HamstersController < ApplicationController
   unloadable
 
+  before_action :user_privileges
   before_action :find_issue,   only: [:start]
   before_action :find_hamster, only: [:update, :destroy]
   before_action :find_hamster_issue, only: [:stop]
@@ -73,6 +74,10 @@ class HamstersController < ApplicationController
     @project = @issue.project
     @date = params[:time_entry][:spent_on]
     @hamster =  Hamster.my.find(params[:time_entry][:hamster_id])
+  end
+
+  def user_privileges
+    deny_access unless User.current.admin? || User.current.has_access?
   end
 
 end

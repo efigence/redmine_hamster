@@ -11,7 +11,7 @@
 
     bindShowButtonSave: function(){
       $('.spend_time input').keyup(function(e) {
-        $(e.currentTarget).parent().parent().children('td.spend_time').find('.action-save').fadeIn(1000);
+        $(e.currentTarget).parent().parent().children('td.spend_time').find('.action-save').fadeIn(400);
       });
     },
 
@@ -20,7 +20,7 @@
       $('.action-save').on('click', function(e) {
         new_val = $(e.target).closest('tr').find('#hamster_spend_time').val();
         $(e.target).closest('tr').find('.hamster-hours').val(new_val);
-        $(e.target).fadeOut(1000);
+        $(e.target).fadeOut(400);
       });
     },
 

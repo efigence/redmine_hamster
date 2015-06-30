@@ -29,6 +29,18 @@ module RedmineHamster
             User.current.work_time.blank? ? false : User.current.work_time.multi_start
           end
 
+          def has_access?
+            !(user_ids & groups_with_access).blank?
+          end
+
+          def user_ids
+            User.current.groups.select('id').collect{|el| el.id.to_s}
+          end
+
+          def groups_with_access
+            Setting.plugin_redmine_hamster["groups"] || []
+          end
+
         end
       end
 

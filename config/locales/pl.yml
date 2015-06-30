@@ -3,7 +3,7 @@ pl:
   label_working_hours: Godziny pracy
   label_start_at: Godzina rozpoczęcia
   label_end_at: Godzina zakończenia
-  label_multiple_start: Rozpocznaj zagadnienia równolegle
+  label_multiple_start: Rozpoczynaj zagadnienia równolegle
   label_after_start: 'Po starcie zmień status na:'
   label_after_stop: 'Po zatrzymaniu zmień status na:'
   label_error_on_status: Pola ze zmianami statusów powinny zostać wybrane
