@@ -3,6 +3,7 @@ class HamsterIssue < ActiveRecord::Base
   attr_accessible :user_id, :issue_id, :start_at
 
   belongs_to :issue
+  belongs_to :user
 
   scope :my, -> { where(user_id: User.current.id) }
 
@@ -12,6 +13,7 @@ class HamsterIssue < ActiveRecord::Base
     diff = TimeDifference.between(start_at, end_time).in_hours
     if same_day?(start_at, end_time)
       h = Hamster.create_or_update(start_at, end_time, diff, self.issue_id, self.user_id)
+      self.issue.change_issue_on_stop
       self.destroy if h
     else
       days = Date.parse(start_at.to_s).business_days_until(Date.today) # bussines days between dates
@@ -20,6 +22,7 @@ class HamsterIssue < ActiveRecord::Base
         spent_time = set_spent_time(i, days, start_at)
         h = Hamster.create_or_update(date.to_datetime, end_time, spent_time, self.issue_id, self.user_id)
       end
+      self.issue.change_issue_on_stop
       self.destroy if h
     end
   end

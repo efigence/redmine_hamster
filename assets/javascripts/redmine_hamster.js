@@ -8,7 +8,7 @@
       this.bindRemoveHamster();
       this.bindRaportHamster();
     },
-// remove-hamster
+
     bindShowButtonSave: function(){
       $('.spend_time input').keyup(function(e) {
         $(e.currentTarget).parent().parent().children('td.spend_time').find('.action-save').fadeIn(1000);

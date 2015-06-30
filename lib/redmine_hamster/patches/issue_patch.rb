@@ -18,7 +18,17 @@ module RedmineHamster
                              }
 
           def has_hamster_issue?
-            self.hamster_issue.blank?
+            self.hamster_issue.blank? ? false : true
+          end
+
+          def change_issue_on_start
+            status = User.current.work_time.try(:start_status_to)
+            self.update_attributes(status_id: status) if status
+          end
+
+          def change_issue_on_stop
+            status = User.current.work_time.try(:stop_status_to)
+            self.update_attributes(status_id: status) if status
           end
         end
       end

@@ -18,7 +18,7 @@
         <td class="subject">
           <%= link_to(issue.subject.truncate(60), issue_path(issue)) %> (<%= issue.status %>)
         </td>
-        <% unless !issue.has_hamster_issue? %>
+        <% if !issue.has_hamster_issue? %>
           <td class='project btn-action'><%= link_to l(:button_start), hamsters_start_path(issue_id: issue.id), method: 'post' %></td>
         <% end %>
       </tr>

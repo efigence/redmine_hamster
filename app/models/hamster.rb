@@ -9,9 +9,9 @@ class Hamster < ActiveRecord::Base
     if hamster.any?
       hamster = hamster.first
       time = (hamster.spend_time + spend_time).round(2)
-      hamster.update_attributes(end_time: end_time, spend_time: time)
+      hamster.update_attributes(end_at: end_time, spend_time: time)
     else
-      Hamster.create(user_id: user_id, issue_id: issue_id, start_at: start_date, end_time: end_time, spend_time: spend_time)
+      Hamster.create(user_id: user_id, issue_id: issue_id, start_at: start_date, end_at: end_time, spend_time: spend_time)
     end
   end
 

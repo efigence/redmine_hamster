@@ -7,6 +7,7 @@ module RedmineHamster
         base.class_eval do
           unloadable
           has_one :work_time
+          has_many :hamster_issues
 
           def working_hours
             if self.work_time.blank?
@@ -23,6 +24,11 @@ module RedmineHamster
           def end_at
             User.current.work_time.blank? ? '17:00' : User.current.work_time.end_at.strftime('%H:%M')
           end
+
+          def multi_start_enabled?
+            User.current.work_time.blank? ? false : User.current.work_time.multi_start
+          end
+
         end
       end
 

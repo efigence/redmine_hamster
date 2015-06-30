@@ -12,7 +12,9 @@ class HamstersController < ApplicationController
   end
 
   def start
+    stop_others unless User.current.multi_start_enabled?
     HamsterIssue.start(@issue.id)
+    @issue.change_issue_on_start
     redirect_to hamsters_index_url
   end
 
@@ -49,6 +51,10 @@ class HamstersController < ApplicationController
   end
 
   private
+
+  def stop_others
+    HamsterIssue.my.each { |h| h.stop }
+  end
 
   def find_issue
     @issue = Issue.find(params[:issue_id])
