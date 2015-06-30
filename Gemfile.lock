@@ -7,6 +7,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    business_time (0.7.4)
+      activesupport (>= 3.1.0)
+      tzinfo
     i18n (0.7.0)
     json (1.8.3)
     minitest (5.7.0)
@@ -20,6 +23,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  business_time
   time_difference
 
 BUNDLED WITH

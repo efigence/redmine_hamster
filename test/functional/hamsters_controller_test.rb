@@ -1,5 +1,5 @@
 require File.expand_path('../../test_helper', __FILE__)
-require 'pry'
+
 class HamstersControllerTest < Redmine::IntegrationTest
   fixtures :users, :issues, :projects, :issue_statuses, :members,
            :roles, :member_roles, :enabled_modules,

@@ -9,7 +9,6 @@ rvm:
   - 2.1
   - 2.0
 env:
-  - REDMINE_VERSION=2.6.5 VERBOSE=no DB=mysql
   - REDMINE_VERSION=3.0.3 VERBOSE=no DB=mysql
 
 script:
