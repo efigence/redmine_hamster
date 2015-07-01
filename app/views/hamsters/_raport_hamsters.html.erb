@@ -22,7 +22,7 @@
             <tr id="<%= day %>" class="list-hamsters">            
               <td class="project"><%= issue.project %></td>
               <td class="tracker"><%= issue.tracker %></td>
-              <td class="subject">(#<%= issue.id %>)<%= issue.subject.truncate(60) %></td>
+              <td class="subject">(#<%= issue.id %>)<%= issue.subject.truncate(30) %></td>
               <%= form_for item, :remote => true do |f| %>
                 <td class="spend_time">
                   <%= f.text_field :spend_time, autocomplete: 'off' %>h 

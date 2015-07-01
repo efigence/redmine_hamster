@@ -4,9 +4,9 @@
     <legend><%=l(:label_working_hours)%></legend>
     <p>
       <label><%=l(:label_start_at)%></label>
-      <%= text_field_tag :start_at, @work.start_at.try(:strftime, "%H:%M"), id: 'start_at', class: 'timepicker' %><br/>
+      <%= text_field_tag :start_at, @work.start_at.try(:strftime, "%H:%M"), id: 'start_at', class: 'timepicker', autocomplete: 'off' %><br/>
       <label><%=l(:label_end_at)%></label>
-      <%= text_field_tag :end_at, @work.end_at.try(:strftime, "%H:%M"), id: 'end_at', class: 'timepicker' %><br/><br/>
+      <%= text_field_tag :end_at, @work.end_at.try(:strftime, "%H:%M"), id: 'end_at', class: 'timepicker', autocomplete: 'off'  %><br/><br/>
       <label><%=l(:label_after_start)%></label>
       <%= select_tag :start_status_to, options_from_collection_for_select(IssueStatus.where(is_closed: false), "id", "name", @work.start_status_to), include_blank: true %><br/>
       <label><%=l(:label_after_stop)%></label>

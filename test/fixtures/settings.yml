@@ -1,0 +1,7 @@
+---
+settings_001:
+  id: 1
+  name: plugin_redmine_hamster
+  value: 
+    groups: ["10"]
+  updated_on: 2015-07-01 09:50:22 +02:00

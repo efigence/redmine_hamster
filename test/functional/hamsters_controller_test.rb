@@ -1,22 +1,29 @@
 require File.expand_path('../../test_helper', __FILE__)
 
 class HamstersControllerTest < Redmine::IntegrationTest
-  fixtures :users, :issues, :projects, :issue_statuses, :members,
-           :roles, :member_roles, :enabled_modules,
-           :time_entries, :trackers, :enumerations, :issue_categories,
-           :projects_trackers, :journals, :journal_details, :groups_users,
-           :email_addresses
+  self.fixture_path = File.join(File.dirname(__FILE__), '../fixtures')
+  fixtures :users,
+           :issues,
+           :projects,
+           :issue_statuses,
+           :members,
+           :settings,
+           :roles,
+           :enabled_modules,
+           :time_entries,
+           :trackers,
+           :email_addresses,
+           :groups_users
 
   def setup
     Hamster.destroy_all
     HamsterIssue.destroy_all
     WorkTime.destroy_all
-    Group.destroy_all
   end
 
   def test_start_issue_should_create_new_hamster_issue
     log_user('jsmith', 'jsmith')
-    allow_user(User.current)
+    allow_user(User.current)#as admin
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 4
       assert_response 302
@@ -25,7 +32,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_start_and_stop_issue
     log_user('jsmith', 'jsmith')
-    allow_user(User.current)
+    allow_user(User.current) #as admin
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 4
       assert_response 302
@@ -44,7 +51,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_start_stop_raport_time
     log_user('dlopper', 'foo')
-    allow_user(User.current)
+    allow_user(User.current) # as admin
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
       assert_response 302
@@ -70,7 +77,6 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_divide_hamster_issue_by_days_on_stop
     log_user('dlopper', 'foo')
-    allow_user(User.current)
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
       assert_response 302
@@ -85,7 +91,6 @@ class HamstersControllerTest < Redmine::IntegrationTest
   def test_middle_raported_day_shoud_equal_user_working_hours
     # quaue -> today, yesterday, etc..
     log_user('dlopper', 'foo')
-    allow_user(User.current)
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
       assert_response 302
@@ -101,7 +106,6 @@ class HamstersControllerTest < Redmine::IntegrationTest
   def test_start_after_user_finish_time_work_and_stop_on_next_day_should_set_1_hour
     # User finish work at 17:00(by default)
     log_user('dlopper', 'foo')
-    allow_user(User.current)
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
       assert_response 302
@@ -119,7 +123,6 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_disabled_multi_start_issues
     log_user('dlopper', 'foo')
-    allow_user(User.current)
     WorkTime.create(user_id: User.current.id, start_at: '09:00', end_at: '17:00', multi_start: false)
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
@@ -135,7 +138,6 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_enabled_multi_start_issues
     log_user('dlopper', 'foo')
-    allow_user(User.current)
     WorkTime.create(user_id: User.current.id, start_at: '09:00', end_at: '17:00', multi_start: true)
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
@@ -151,7 +153,6 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_change_status_after_start_stop
     log_user('dlopper', 'foo')
-    allow_user(User.current)
     WorkTime.create(user_id: User.current.id, start_at: '09:00', end_at: '17:00', start_status_to: 2, stop_status_to: 3)
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
@@ -166,9 +167,18 @@ class HamstersControllerTest < Redmine::IntegrationTest
   end
 
   def test_permissions
-    log_user('dlopper', 'foo')
+    # this user is not an admin and has no groups
+    log_user('someone', 'foo')
+    assert_equal 0, User.current.groups.count, "User should not have any groups"
     get hamsters_index_path
     assert_response 403
+  end
+
+  def test_permitted_group
+    # dlopper belongs to allowed group -> 10
+    log_user('dlopper', 'foo')
+    get hamsters_index_path
+    assert_response 200
   end
 
   private
