@@ -1,8 +1,6 @@
-<% issues = Issue.my_open.to_a %>
-
 <div id="list-left" class="splitcontentleft">
   <div class="mypage-box">
-    <%= render :partial => 'hamsters/issues_list', locals: {issues: issues} %>
+    <%= render :partial => 'hamsters/issues_list', locals: {issues: @issues} %>
   </div>
 </div>
 

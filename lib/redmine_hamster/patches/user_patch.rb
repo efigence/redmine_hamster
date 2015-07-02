@@ -8,6 +8,7 @@ module RedmineHamster
           unloadable
           has_one :work_time
           has_many :hamster_issues
+          has_many :hamsters
 
           def working_hours
             if self.work_time.blank?

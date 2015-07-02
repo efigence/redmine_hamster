@@ -13,6 +13,8 @@ pl:
   button_raport: Zaraportuj
   button_start: Rozpocznij
   button_stop: Zakończ
+  title_hamster_stop: Hamster zatrzymaj zagadnienie
+  title_hamster_start: Hamster rozpocznij zagadnienie
   notice_account_work_time: Czas pracy jest nieprawidłowy
   settings:
     allowed_groups_to_use_hamster: 'Grupy uprawnione do używania Hamster-a'

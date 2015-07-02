@@ -3,6 +3,7 @@
   <table class="list">
     <thead>
       <tr>
+        <th><%=l(:field_issue)%></th>
         <th><%=l(:field_project)%></th>
         <th><%=l(:field_issue)%></th>
         <th><%=l(:field_start_at)%></th>
@@ -12,8 +13,9 @@
     <tbody>
     <% for item in items %>
       <tr id="item-<%= item.id %>" class="">
-        <td class="project"><%= Issue.find(item.issue_id).project %></td>
-        <td class="issue">(#<%= item.issue_id %>)<%= Issue.find(item.issue_id).subject.truncate(50) %></td>
+        <td class="issue"><%= link_to item.issue_id, issue_path(item.issue) %></td>
+        <td class="project"><%= link_to_project(item.issue.project) %></td>
+        <td class="issue"><%= link_to item.issue.subject.truncate(50), issue_path(item.issue) %></td>
         <td class="start-at"><%= Time.zone.parse(item.start_at.to_s).localtime.to_s(:db) %></td>
         <td class='project btn-action'><%= link_to l(:button_stop), hamsters_stop_path(hamster_issue_id: item), method: 'post' %></td>
       </tr>

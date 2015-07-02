@@ -1,7 +1,8 @@
 class Hamster < ActiveRecord::Base
   unloadable
   attr_accessible :user_id, :issue_id, :start_at, :status, :end_at, :spend_time
-
+  belongs_to :user
+  belongs_to :issue
   scope :my, -> { where(user_id: User.current.id) }
 
   def self.create_or_update(start_date, end_time, spend_time, issue_id, user_id)

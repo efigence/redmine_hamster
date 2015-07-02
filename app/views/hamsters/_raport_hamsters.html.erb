@@ -3,6 +3,7 @@
   <table class="list">
     <thead>
       <tr>
+        <th><%=l(:field_issue)%></th>
         <th><%=l(:field_project)%></th>
         <th><%=l(:field_tracker)%></th>
         <th><%=l(:field_subject)%></th>
@@ -15,14 +16,14 @@
     <% items.keys.sort.each do |day| %>
       <tbody style="padding-bottom: 2px;">
         <tr id="<%= day %>" class="">
-          <th class="date" colspan="6"><%=day%></th>
+          <th class="date" colspan="7"><%=day%></th>
         </tr>
         <% for item in items[day] %>
-            <% issue = Issue.find(item.issue_id) %>
-            <tr id="<%= day %>" class="list-hamsters">            
-              <td class="project"><%= issue.project %></td>
-              <td class="tracker"><%= issue.tracker %></td>
-              <td class="subject">(#<%= issue.id %>)<%= issue.subject.truncate(30) %></td>
+            <tr id="<%= day %>" class="list-hamsters">
+              <td class="issue"><%= link_to item.issue_id, issue_path(item.issue) %></td>
+              <td class="project"><%= link_to_project(item.issue.project) %></td>
+              <td class="tracker"><%= item.issue.tracker %></td>
+              <td class="subject"><%= link_to item.issue.subject.truncate(30), issue_path(item.issue) %></td>
               <%= form_for item, :remote => true do |f| %>
                 <td class="spend_time">
                   <%= f.text_field :spend_time, autocomplete: 'off' %>h 
@@ -30,7 +31,7 @@
                 </td>
               <% end %>
               <%= form_for :time_entry, :url => {:action => "raport_time"}, :remote => true do |t| %>
-                <%= t.hidden_field :issue_id, value: issue.id %>
+                <%= t.hidden_field :issue_id, value: item.issue_id %>
                 <%= t.hidden_field :hamster_id, value: item.id %>
                 <%= t.hidden_field :spent_on, value: day %>
                 <%= t.hidden_field :hours, value: item.spend_time, class: 'hamster-hours' %>

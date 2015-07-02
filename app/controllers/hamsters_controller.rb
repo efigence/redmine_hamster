@@ -8,6 +8,7 @@ class HamstersController < ApplicationController
   before_action :prepare_data, only: [:raport_time]
 
   def index
+    @issues = Issue.my_open.to_a
     @active_hamsters = HamsterIssue.my
     @raport_hamsters = Hamster.my.group_by {|h| h.start_at.to_date }
   end

@@ -56,18 +56,18 @@ class HamstersControllerTest < Redmine::IntegrationTest
       post hamsters_start_path, issue_id: 3
       assert_response 302
     end
-    hi = HamsterIssue.where(user_id: User.current.id).first
+    hi = User.current.hamster_issues.first
     hi.start_at = hi.start_at - 3.hours
     hi.save
     assert_difference 'Hamster.count', +1 do
       assert_difference 'HamsterIssue.count', -1 do
         post hamsters_stop_path, hamster_issue_id: hi.id
-        h = Hamster.where(user_id: User.current.id, issue_id: 3).first
+        h = User.current.hamsters.where(issue_id: 3).first
         assert_equal h.spend_time, 3.0, 'Spent time should be 3 hours'
       end
     end
     date = hi.start_at.to_date.to_s
-    hamster = Hamster.where(user_id: User.current.id, issue_id: 3).first
+    hamster = User.current.hamsters.where(issue_id: 3).first
     assert_difference 'TimeEntry.count', +1 do
       post raport_time_path, time_entry: {issue_id: 3 , spent_on: date, hours: hamster.spend_time, hamster_id: hamster.id, activity_id: 10 }
       te = TimeEntry.where(user_id: User.current.id, issue_id: 3).last
@@ -179,6 +179,53 @@ class HamstersControllerTest < Redmine::IntegrationTest
     log_user('dlopper', 'foo')
     get hamsters_index_path
     assert_response 200
+  end
+
+  def test_should_not_change_status_for_issue_assigned_to_other_user
+    # issue 3 -> status_id : 1
+    log_user('jsmith', 'jsmith')
+    allow_user(User.current)#as admin
+    WorkTime.create(user_id: User.current.id, start_status_to: 2, stop_status_to: 4)
+    assert_difference 'HamsterIssue.count', +1 do
+      assert_not_equal User.current.id, Issue.find(3).assigned_to_id, 'Id should be different'
+      post hamsters_start_path, issue_id: 3
+      assert_response 302
+      assert_equal 1, HamsterIssue.last.issue.status_id, 'Status should not be changed'
+    end
+    post signout_path
+    log_user('dlopper', 'foo')
+    WorkTime.create(user_id: User.current.id, start_status_to: 2, stop_status_to: 3)
+    assert_difference 'HamsterIssue.count', +1 do
+      assert_equal User.current.id, Issue.find(3).assigned_to_id, 'Issue should assigne to this user!'
+      post hamsters_start_path, issue_id: 3
+      assert_response 302
+      assert_equal 2, HamsterIssue.last.issue.status_id, 'Status should be changed'
+    end
+    hi = HamsterIssue.my.first
+    post hamsters_stop_path, hamster_issue_id: hi.id
+    assert_equal 3, Issue.find(3).status_id, 'Status should be changed'
+  end
+
+  def test_should_not_destroy_hamster_issues_other_user_in_the_same_issue
+    log_user('jsmith', 'jsmith')
+    allow_user(User.current)#as admin
+    assert_difference 'HamsterIssue.count', +1 do
+      post hamsters_start_path, issue_id: 4
+      assert_response 302
+    end
+    post signout_path
+    log_user('dlopper', 'foo')
+    assert_difference 'HamsterIssue.count', +1 do
+      post hamsters_start_path, issue_id: 4
+      assert_response 302
+    end
+    assert_equal 2, HamsterIssue.where(issue_id: 4).count, 'Wrong issue count!'
+    assert_difference 'HamsterIssue.count', -1 do
+      hi = HamsterIssue.my.first
+      post hamsters_stop_path, hamster_issue_id: hi.id
+      assert_response 302
+    end
+    assert_equal 1, HamsterIssue.where(issue_id: 4).count, 'Wrong issue count!'
   end
 
   private

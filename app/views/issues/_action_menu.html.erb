@@ -1,0 +1,15 @@
+<div class="contextual">
+  <% item = @issue.hamster_issues.find_by(user_id: User.current.id) %>
+  <% if User.current.allowed_to?(:log_time, @project) && User.current.has_access? || User.current.admin? %>
+    <%= link_to l(:button_stop), hamsters_stop_path(hamster_issue_id: item), method: 'post', remote: true, class: 'hamster-action icon icon-hamster', title: l(:title_hamster_stop) if item %>
+    <%= link_to l(:button_start), hamsters_start_path(issue_id: @issue.id), method: 'post', remote: true, class: 'hamster-action icon icon-hamster', title: l(:title_hamster_start) if !item %>
+  <% end %>
+</div>
+
+<%= render :file => '/app/views/issues/_action_menu.html.erb' %>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'issues', :plugin => 'redmine_hamster', :media => 'all' %>
+  <%= javascript_include_tag 'issues', :plugin => 'redmine_hamster' %>
+<% end %>
+
