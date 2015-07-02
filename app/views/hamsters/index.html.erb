@@ -1,15 +1,28 @@
 <div id="list-left" class="splitcontentleft">
   <div class="mypage-box">
-    <%= render :partial => 'hamsters/issues_list', locals: {issues: @issues} %>
+    <h3><%=l(:label_assigned_to_me_issues)%> <%= button_to '+', new_issue_path, method: :get, class: 'btn-action', style: "cursor: pointer;" %></h3>
+    <% cache "hamster_my_issues_#{User.current.id}_#{RedmineHamster::LoadData.my_issues.first.try(:updated_on)}" do %>
+      <%= render :partial => 'hamsters/issues_list', locals: {issues: RedmineHamster::LoadData.my_issues} %>
+    <% end %>
+  </div>
+  <div class="mypage-box">
+    <h3><%=l(:label_mru)%></h3>
+    <% cache "hamster_my_mru_issues_#{User.current.id}_#{RedmineHamster::LoadData.mru.first.try(:updated_on)}" do %>
+      <%= render :partial => 'hamsters/issues_list', locals: {issues: RedmineHamster::LoadData.mru} %>
+    <% end %>
   </div>
 </div>
 
 <div id="list-right" class="splitcontentright">
   <div class="mypage-box">
-    <%= render :partial => 'hamsters/active_hamsters', locals: {items: @active_hamsters} %>
+    <% cache "hamster_my_active_hamsters_#{User.current.id}_#{RedmineHamster::LoadData.my_active_hamsters.count}" do %>
+      <%= render :partial => 'hamsters/active_hamsters', locals: {items: RedmineHamster::LoadData.my_active_hamsters } %>
+    <% end %>
   </div>
   <div class="mypage-box">
-    <%= render :partial => 'hamsters/raport_hamsters', locals: {items: @raport_hamsters} %>
+    <% cache "hamster_my_ready_hamsters_#{User.current.id}_#{RedmineHamster::LoadData.my_ready_to_raport_hamsters}" do %>
+      <%= render :partial => 'hamsters/raport_hamsters', locals: {items: RedmineHamster::LoadData.my_ready_to_raport_hamsters} %>
+    <% end %>
   </div>
 </div>
 

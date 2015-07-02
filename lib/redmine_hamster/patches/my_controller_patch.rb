@@ -25,7 +25,8 @@ module RedmineHamster
 
           def create_working_hours multi = nil
             w = WorkTime.create(user_id: User.current.id, start_at: params[:start_at], end_at: params[:end_at],
-                multi_start: multi, start_status_to: params[:start_status_to], stop_status_to: params[:stop_status_to])
+                multi_start: multi, start_status_to: params[:start_status_to], stop_status_to: params[:stop_status_to],
+                days_ago: params[:days_ago])
             flash[:error] = w.errors.full_messages.first if w.errors.any?
           end
 
@@ -36,6 +37,7 @@ module RedmineHamster
             w.multi_start = multi
             w.start_status_to = params[:start_status_to]
             w.stop_status_to = params[:stop_status_to]
+            w.days_ago = params[:days_ago]
             if w.save
               true
             else

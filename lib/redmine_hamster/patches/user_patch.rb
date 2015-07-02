@@ -26,6 +26,10 @@ module RedmineHamster
             User.current.work_time.blank? ? '17:00' : User.current.work_time.end_at.strftime('%H:%M')
           end
 
+          def raported_days_count
+            User.current.work_time.blank? ? 7 : User.current.work_time.days_ago
+          end
+
           def multi_start_enabled?
             User.current.work_time.blank? ? false : User.current.work_time.multi_start
           end

@@ -3,15 +3,14 @@
     init: function(){
       this.bindShowButtonSave();
       this.bindHideButtonSave();
-      // this.bindShowRemoveButton();
-      // this.bindHideRemoveButton();
       this.bindRemoveHamster();
       this.bindRaportHamster();
     },
 
     bindShowButtonSave: function(){
       $('.spend_time input').keyup(function(e) {
-        $(e.currentTarget).parent().parent().children('td.spend_time').find('.action-save').fadeIn(400);
+        $(this).closest('tr').find('.action-save').fadeIn(400);
+        $(this).closest('tr').find('.hamster-hours').val( $(this).val() );
       });
     },
 

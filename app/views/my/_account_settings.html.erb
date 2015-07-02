@@ -12,7 +12,9 @@
       <label><%=l(:label_after_stop)%></label>
       <%= select_tag :stop_status_to, options_from_collection_for_select(IssueStatus.all, "id", "name", @work.stop_status_to), include_blank: true %><br/><br/>
       <label><%=l(:label_multiple_start)%></label>
-      <%= check_box_tag :multi_start, @work.multi_start, @work.multi_start %><br/>
+      <%= check_box_tag :multi_start, @work.multi_start, @work.multi_start %><br/><br/>
+      <label><%=l(:label_raported)%></label>
+      <%= text_field_tag :days_ago, @work.days_ago, autocomplete: 'off', size: 4 %><%=l(:label_days_ago)%>
     </p>
   </fieldset>
 <% end %>

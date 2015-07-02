@@ -18,6 +18,7 @@ Redmine::Plugin.register :redmine_hamster do
 
   ActionDispatch::Callbacks.to_prepare do
     require 'redmine_hamster/hooks/my_account_hook'
+    require 'redmine_hamster/redmine_hamster'
     Issue.send(:include, RedmineHamster::Patches::IssuePatch)
     User.send(:include, RedmineHamster::Patches::UserPatch)
     MyController.send(:include, RedmineHamster::Patches::MyControllerPatch)
