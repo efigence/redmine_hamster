@@ -15,7 +15,7 @@ module RedmineHamster
                                       projects: { status: Project::STATUS_ACTIVE }).
                                 includes(:status, :project, :tracker, :priority).
                                 references(:status, :project, :tracker, :priority).
-                                order("#{IssuePriority.table_name}.position DESC, #{Issue.table_name}.updated_on DESC")
+                                order("#{IssuePriority.table_name}.position DESC")
                              }
 
           def has_hamster_issue?

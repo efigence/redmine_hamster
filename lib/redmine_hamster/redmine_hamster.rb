@@ -2,8 +2,9 @@ module RedmineHamster
   class LoadData
     class << self
       
-      def my_issues
-        Issue.my_open.to_a
+      def my_issues opt = nil
+        opt = opt || 'DESC'
+        Issue.my_open.order("#{Issue.table_name}.updated_on #{opt}").to_a
       end
 
       def my_active_hamsters

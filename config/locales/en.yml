@@ -16,6 +16,7 @@ en:
   button_raport: Raport
   button_start: Start
   button_stop: Stop
+  title_sort: Sort by updated on
   title_hamster_stop: Hamster stop issue
   title_hamster_start: Hamster start issue
   notice_account_work_time: Working time is invalid

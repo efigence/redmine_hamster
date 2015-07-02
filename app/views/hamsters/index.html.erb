@@ -2,7 +2,7 @@
   <div class="mypage-box">
     <h3><%=l(:label_assigned_to_me_issues)%> <%= button_to '+', new_issue_path, method: :get, class: 'btn-action', style: "cursor: pointer;" %></h3>
     <% cache "hamster_my_issues_#{User.current.id}_#{RedmineHamster::LoadData.my_issues.first.try(:updated_on)}" do %>
-      <%= render :partial => 'hamsters/issues_list', locals: {issues: RedmineHamster::LoadData.my_issues} %>
+      <%= render :partial => 'hamsters/issues_list', locals: {issues: RedmineHamster::LoadData.my_issues(params[:order])} %>
     <% end %>
   </div>
   <div class="mypage-box">

@@ -17,6 +17,7 @@ pl:
   button_raport: Zaraportuj
   button_start: Rozpocznij
   button_stop: Zakończ
+  title_sort: Sortuj po dacie aktualizacji
   title_hamster_stop: Hamster zatrzymaj zagadnienie
   title_hamster_start: Hamster rozpocznij zagadnienie
   notice_account_work_time: Czas pracy jest nieprawidłowy

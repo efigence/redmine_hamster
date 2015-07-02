@@ -1,12 +1,13 @@
 <% if issues && issues.any? %>
-  <table class="list issues">
+  <% order = params[:order] == 'ASC' ? 'DESC' : 'ASC' %>
+  <table class="list issues sort-<%= order %>">
     <thead>
       <tr>
         <th><%=l(:field_issue)%></th>
         <th><%=l(:field_project)%></th>
         <th><%=l(:field_tracker)%></th>
         <th><%=l(:field_subject)%></th>
-        <th></th>
+        <th><%= link_to '', hamsters_index_path(order: order), class: "sort #{order.downcase}", title: l(:title_sort) %></th>
       </tr>
     </thead>
     <tbody>
