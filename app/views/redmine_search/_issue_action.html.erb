@@ -1,0 +1,8 @@
+<% item = issue.hamster_issues.find_by(user_id: User.current.id) %>
+<% visible_start = 'none;' if item %>
+<% visible_stop = 'none;' if !item %>
+
+<% if User.current.allowed_to?(:log_time, issue.project) && User.current.has_access? || User.current.admin? %>
+  <%= link_to l(:button_stop), hamsters_stop_path(hamster_issue_id: item), method: 'post', remote: true, class: 'hamster-action icon icon-hamster stop', title: l(:title_hamster_stop), style: "display: #{visible_stop}"  %>
+  <%= link_to l(:button_start), hamsters_start_path(issue_id: issue.id), method: 'post', remote: true, class: 'hamster-action icon icon-hamster start', title: l(:title_hamster_start), style: "display: #{visible_start}" %>
+<% end %>

@@ -14,7 +14,13 @@ class HamstersController < ApplicationController
     stop_others unless User.current.multi_start_enabled?
     HamsterIssue.start(@issue.id)
     @issue.change_issue_on_start
-    redirect_to hamsters_index_url
+    if request.xhr?
+      render json: {
+        url: "#{hamsters_stop_path(hamster_issue_id: @issue.hamster_issues.last)}"
+      }
+    else
+      redirect_to hamsters_index_url
+    end
   end
 
   def stop
