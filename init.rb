@@ -10,7 +10,7 @@ Redmine::Plugin.register :redmine_hamster do
   menu :top_menu,
     :hamster, { controller: 'hamsters', action: 'index'},
     caption: :label_hamster, :after => :help,
-    :if => proc { User.current.logged? && (User.current.admin? || User.current.has_access?) }
+    :if => proc { User.current.logged? && (User.current.admin? || User.current.has_access_to_hamster?) }
 
   settings :default => {
     'groups' => []

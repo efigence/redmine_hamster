@@ -34,7 +34,7 @@ module RedmineHamster
             User.current.work_time.blank? ? false : User.current.work_time.multi_start
           end
 
-          def has_access?
+          def has_access_to_hamster?
             !(user_ids & groups_with_access).blank?
           end
 

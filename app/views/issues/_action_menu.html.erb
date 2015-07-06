@@ -1,6 +1,6 @@
 <div class="contextual">
   <% item = @issue.hamster_issues.find_by(user_id: User.current.id) %>
-  <% if User.current.allowed_to?(:log_time, @project) && User.current.has_access? || User.current.admin? %>
+  <% if User.current.allowed_to?(:log_time, @project) && User.current.has_access_to_hamster? || User.current.admin? %>
     <%= link_to l(:button_stop), hamsters_stop_path(hamster_issue_id: item), method: 'post', remote: true, class: 'hamster-action icon icon-hamster', title: l(:title_hamster_stop) if item %>
     <%= link_to l(:button_start), hamsters_start_path(issue_id: @issue.id), method: 'post', remote: true, class: 'hamster-action icon icon-hamster', title: l(:title_hamster_start) if !item %>
   <% end %>

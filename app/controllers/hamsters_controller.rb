@@ -81,7 +81,7 @@ class HamstersController < ApplicationController
   end
 
   def user_privileges
-    deny_access unless User.current.admin? || User.current.has_access?
+    deny_access unless User.current.admin? || User.current.has_access_to_hamster?
   end
 
 end
