@@ -5,6 +5,25 @@
       this.bindHideButtonSave();
       this.bindRemoveHamster();
       this.bindRaportHamster();
+      this.bindSortIssues();
+    },
+
+    bindSortIssues: function(){
+      $('.sort').last().hide();
+      var url = window.location.href;
+      $('#sort-issues').on('click', function(){
+        order = $(this).data('order');
+        $.ajax({
+          url: url,
+          type: "GET",
+          data: { 'order' : order },
+          success: function(data){
+            document.open();
+            document.write(data);
+            document.close();
+          }
+        })
+      });
     },
 
     bindShowButtonSave: function(){
