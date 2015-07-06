@@ -15,9 +15,7 @@
 
 <div id="list-right" class="splitcontentright">
   <div class="mypage-box">
-    <% cache "hamster_my_active_hamsters_#{User.current.id}_#{RedmineHamster::LoadData.my_active_hamsters.count}" do %>
-      <%= render :partial => 'hamsters/active_hamsters', locals: {items: RedmineHamster::LoadData.my_active_hamsters } %>
-    <% end %>
+    <%= render :partial => 'hamsters/active_hamsters', locals: {items: RedmineHamster::LoadData.my_active_hamsters } %>
   </div>
   <div class="mypage-box">
     <% cache "hamster_my_ready_hamsters_#{User.current.id}_#{RedmineHamster::LoadData.my_ready_to_raport_hamsters}" do %>
