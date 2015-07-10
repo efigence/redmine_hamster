@@ -2,10 +2,11 @@ class HamsterIssue < ActiveRecord::Base
   unloadable
   attr_accessible :user_id, :issue_id, :start_at
 
-  belongs_to :issue, touch: true
+  belongs_to :issue
   belongs_to :user
 
   scope :my, -> { where(user_id: User.current.id) }
+  after_commit :touch_issue
 
   def stop
     end_time = DateTime.now
@@ -32,6 +33,10 @@ class HamsterIssue < ActiveRecord::Base
   end
 
   private
+
+  def touch_issue
+    self.issue.touch
+  end
 
   def set_spent_time i, days, start_at
     if i == 0 #day of end
