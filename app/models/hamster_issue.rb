@@ -2,7 +2,7 @@ class HamsterIssue < ActiveRecord::Base
   unloadable
   attr_accessible :user_id, :issue_id, :start_at
 
-  belongs_to :issue
+  belongs_to :issue, touch: true
   belongs_to :user
 
   scope :my, -> { where(user_id: User.current.id) }
