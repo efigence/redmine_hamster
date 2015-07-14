@@ -35,7 +35,14 @@ class HamsterIssue < ActiveRecord::Base
   private
 
   def touch_issue
-    self.issue.touch
+    retry_count ||= 0
+    issue.reload
+    issue.touch
+  rescue ActiveRecord::StaleObjectError => ex
+    retry_count += 1
+    raise ex if retry_count > 3
+    sleep retry_count * 2
+    retry
   end
 
   def set_spent_time i, days, start_at

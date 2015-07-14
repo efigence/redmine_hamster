@@ -9,7 +9,9 @@
     },
 
     bindSortIssues: function(){
-      $('.sort').last().hide();
+      if( $('.sort').length > 1 ){
+        $('.sort').last().hide();
+      }
       var url = window.location.href;
       $('#sort-issues').on('click', function(){
         order = $(this).data('order');
