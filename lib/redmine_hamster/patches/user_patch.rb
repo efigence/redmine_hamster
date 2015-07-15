@@ -19,19 +19,23 @@ module RedmineHamster
           end
 
           def start_at
-            User.current.work_time.blank? ? '09:00' : User.current.work_time.start_at.strftime('%H:%M')
+            return '09:00' if User.current.work_time.blank? || User.current.work_time.try(:start_at).blank?
+            User.current.work_time.start_at.strftime('%H:%M')
           end
 
           def end_at
-            User.current.work_time.blank? ? '17:00' : User.current.work_time.end_at.strftime('%H:%M')
+            return '17:00' if User.current.work_time.blank? || User.current.work_time.try(:end_at).blank?
+            User.current.work_time.end_at.strftime('%H:%M')
           end
 
           def raported_days_count
-            User.current.work_time.blank? ? 7 : User.current.work_time.days_ago
+            return 7 if User.current.work_time.blank? || User.current.work_time.try(:days_ago).blank?
+            User.current.work_time.days_ago
           end
 
           def multi_start_enabled?
-            User.current.work_time.blank? ? false : User.current.work_time.multi_start
+            return false if User.current.work_time.blank? || User.current.work_time.try(:multi_start).blank?
+            User.current.work_time.multi_start
           end
 
           def has_access_to_hamster?

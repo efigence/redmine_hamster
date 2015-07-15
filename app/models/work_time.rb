@@ -1,6 +1,6 @@
 class WorkTime < ActiveRecord::Base
   unloadable
-  attr_accessible :user_id, :start_at, :end_at, :multi_start, :start_status_to, :stop_status_to
+  attr_accessible :user_id, :start_at, :end_at, :multi_start, :start_status_to, :stop_status_to, :days_ago
   belongs_to :user
 
   DEFAULT = 8.0 #hours

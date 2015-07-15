@@ -228,6 +228,28 @@ class HamstersControllerTest < Redmine::IntegrationTest
     assert_equal 1, HamsterIssue.where(issue_id: 4).count, 'Wrong issue count!'
   end
 
+  def test_should_return_default_data_when_is_not_set
+    log_user('jsmith', 'jsmith')
+    assert_equal nil, User.current.work_time, 'There is no data - should be nil'
+    assert_equal '09:00', User.current.start_at, 'Schould equal default start_at'
+    assert_equal '17:00', User.current.end_at, 'Schould equal default end_at'
+    assert_equal 7, User.current.raported_days_count, 'Schould equal 7'
+    assert_equal false, User.current.multi_start_enabled?, 'Schould not be enable by default'
+    assert_equal 8.0, User.current.working_hours, 'Should equal default working hours'
+  end
+
+  def test_should_return_user_data_from_work_time
+    log_user('jsmith', 'jsmith')
+    WorkTime.create(user_id: User.current.id, start_at: '10:00', end_at: '18:00', multi_start: true, days_ago: 2)
+    assert_not_equal nil, User.current.work_time, 'Should not be nil'
+    assert_equal '10:00', User.current.start_at, 'Schould equal user start_at'
+    assert_equal '18:00', User.current.end_at, 'Schould equal user end_at'
+    assert_equal 2, User.current.raported_days_count, 'Schould equal 2'
+    assert_equal true, User.current.multi_start_enabled?, 'Should be enabled by user'
+    User.current.work_time.update_attributes(:end_at => '18:30')
+    assert_equal 8.5, User.current.working_hours, 'Should equal user working hours'
+  end
+
   private
 
   def allow_user user
