@@ -30,10 +30,12 @@ class HamstersController < ApplicationController
 
   def update
     @hamster.update_attributes(spend_time: params[:hamster][:spend_time])
+    render nothing: true
   end
 
   def destroy
     @hamster.destroy
+    render nothing: true
   end
 
   def raport_time

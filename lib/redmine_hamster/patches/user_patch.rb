@@ -39,14 +39,14 @@ module RedmineHamster
           end
 
           def has_access_to_hamster?
-            !(user_ids & groups_with_access).blank?
+            !(hamster_user_ids & hamster_groups_with_access).blank?
           end
 
-          def user_ids
+          def hamster_user_ids
             User.current.groups.select('id').collect{|el| el.id.to_s}
           end
 
-          def groups_with_access
+          def hamster_groups_with_access
             Setting.plugin_redmine_hamster["groups"] || []
           end
 

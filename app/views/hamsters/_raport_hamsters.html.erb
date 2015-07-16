@@ -12,14 +12,14 @@
         <th></th>
       </tr>
     </thead>
-    
+
     <% items.keys.sort.each do |day| %>
       <tbody style="padding-bottom: 2px;">
         <tr id="<%= day %>" class="">
-          <th class="date" colspan="7"><%=day%></th>
+          <th class="date" colspan="7"><%= day %></th></tr>
         </tr>
         <% for item in items[day] %>
-            <tr id="<%= day %>" class="list-hamsters">
+            <tr id="<%= day %>" class="list-hamsters <%= day %>">
               <td class="issue"><%= link_to item.issue_id, issue_path(item.issue) %></td>
               <td class="project"><%= link_to_project(item.issue.project) %></td>
               <td class="tracker"><%= item.issue.tracker %></td>
@@ -43,6 +43,9 @@
               <td class='remove-action'><%= link_to '', item, method: :delete, remote: true, :class => 'icon icon-del remove-hamster' %></td>
             </tr>
         <% end %>
+        <tr id="<%= day %>">
+          <th class='day-info' colspan="7"><%= l(:label_time_summary) %> <b class='total-spent-time<%= day %>'></b></th>
+        </tr>
       </tbody>
     <% end %>
     

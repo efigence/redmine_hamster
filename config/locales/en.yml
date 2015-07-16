@@ -4,6 +4,7 @@ en:
   label_working_hours: Working hours
   label_start_at: Start at
   label_end_at: End at
+  label_time_summary: 'Summary:'
   label_multiple_start: Let me start issues parallel
   label_after_start: 'On start set status:'
   label_after_stop: 'On stop set status:'

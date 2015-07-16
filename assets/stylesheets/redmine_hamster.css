@@ -25,3 +25,8 @@
 .error {
   border: 1px solid red;
 }
+.day-info {
+  text-align:right;
+  padding: 0 !important;
+  padding-right: 7px !important;
+}

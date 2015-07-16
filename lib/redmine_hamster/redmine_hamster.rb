@@ -16,11 +16,10 @@ module RedmineHamster
       end
 
       def mru
-        Issue.joins(:time_entries).
+        Issue.joins(:time_entries).merge(TimeEntry.order(updated_on: :desc)).
               where(time_entries: {user_id: User.current.id,
                                   updated_on: date_from..DateTime.now}).
               group('issue_id') - my_issues
-        #TODO Sort by raport time date
       end
 
       private

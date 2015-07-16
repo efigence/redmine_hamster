@@ -6,6 +6,21 @@
       this.bindRemoveHamster();
       this.bindRaportHamster();
       this.bindSortIssues();
+      this.calculateSpentTime();
+    },
+
+    calculateSpentTime: function(){
+      heads = $('th.date');
+      for(i = 0; i < heads.length;  i++){
+        date = $(heads[i]).parent().attr('id')
+        var sum = 0.0;
+        elems = $('tr.' + date);
+        for(j = 0; j < elems.length; j++){
+          val = $(elems[j]).find('#hamster_spend_time').val();
+          sum = sum + parseFloat(val);
+        }
+        $(".total-spent-time"+date).html(sum.toFixed(2));
+      }
     },
 
     bindSortIssues: function(){
@@ -32,6 +47,7 @@
       $('.spend_time input').keyup(function(e) {
         $(this).closest('tr').find('.action-save').fadeIn(400);
         $(this).closest('tr').find('.hamster-hours').val( $(this).val() );
+        hamster.calculateSpentTime();
       });
     },
 
@@ -58,7 +74,8 @@
 
     bindRemoveHamster: function(){
       $('.remove-hamster').on('click', function(e) {
-        $(e.currentTarget).closest('tr').fadeOut(300);
+        $(e.currentTarget).closest('tr').fadeOut(300, function() { $(this).remove() });
+        setTimeout(function() {  hamster.calculateSpentTime(); }, 500);
       });
     },
 
