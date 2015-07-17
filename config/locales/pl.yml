@@ -8,7 +8,6 @@ pl:
   label_multiple_start: Pozwól rozpoczynać zagadnienia równolegle
   label_after_start: 'Po starcie zmień status na:'
   label_after_stop: 'Po zatrzymaniu zmień status na:'
-  label_raported_issues_period: 'Zagadnienia raportowane od'
   label_raported: 'Zagadnienia zaraportowane '
   label_days_ago: " dni temu do dziś."
   field_spend_time: Spędzony czas
