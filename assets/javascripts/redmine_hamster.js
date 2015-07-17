@@ -74,7 +74,12 @@
           $(activity_element).addClass('error');
           return false;
         }else{
-          $(e.currentTarget).closest('tr').fadeOut(300);
+          $(e.currentTarget).closest('tr').fadeOut(300, function() { $(this).remove() });
+          setTimeout(function() {  hamster.calculateSpentTime(); }, 500);
+          to_add = parseFloat($(this).closest('tr').find('#hamster_spend_time').val());
+          current_val = parseFloat($(this).closest('tr').parent().find('.already-raported').html());
+          new_val = to_add + current_val;
+          $(this).closest('tr').parent().find('.already-raported').html(new_val);
         }
       });
     }

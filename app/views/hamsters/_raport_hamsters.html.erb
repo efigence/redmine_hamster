@@ -1,5 +1,6 @@
 <h3><%=l(:field_ready_to_raport)%></h3>
 <% if items && items.any? %>
+  <% entries_by_day = RedmineHamster::LoadData.raported_time.group_by(&:spent_on) %>
   <table class="list">
     <thead>
       <tr>
@@ -44,7 +45,11 @@
             </tr>
         <% end %>
         <tr id="<%= day %>">
-          <th class='day-info' colspan="7"><%= l(:label_time_summary) %> <b class='total-spent-time<%= day %>'></b></th>
+          <th class='day-info' colspan="7">
+            <%= l(:label_time_summary) %><b class='total-spent-time<%= day %>'></b><br/>
+            <% already_raported = entries_by_day[day].blank? ? "0.00" : '%.2f' % entries_by_day[day].sum(&:hours).to_f %>
+            <%= l(:label_already_raported) %><b class='already-raported'><%= already_raported %></b>
+          </th>
         </tr>
       </tbody>
     <% end %>

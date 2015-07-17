@@ -4,7 +4,8 @@ pl:
   label_working_hours: Godziny pracy
   label_start_at: Godzina rozpoczęcia
   label_end_at: Godzina zakończenia
-  label_time_summary: 'Podsumowanie:'
+  label_time_summary: 'Hamster podsumowanie: '
+  label_already_raported: 'Aktualnie zaraportowano: '
   label_multiple_start: Pozwól rozpoczynać zagadnienia równolegle
   label_after_start: 'Po starcie zmień status na:'
   label_after_stop: 'Po zatrzymaniu zmień status na:'

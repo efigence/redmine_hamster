@@ -22,6 +22,13 @@ module RedmineHamster
               group('issue_id') - my_issues
       end
 
+      def raported_time
+        TimeEntry.
+          where("#{TimeEntry.table_name}.user_id = ? AND #{TimeEntry.table_name}.spent_on BETWEEN ? AND ?", User.current.id, Date.today - 6, Date.today).
+          order("#{TimeEntry.table_name}.spent_on DESC").
+          to_a
+      end
+
       private
 
       def date_from

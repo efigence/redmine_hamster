@@ -55,6 +55,7 @@ class HamstersController < ApplicationController
         format.api  { render_validation_errors(time_entry) }
       end
     end
+    render nothing: true
   end
 
   private
