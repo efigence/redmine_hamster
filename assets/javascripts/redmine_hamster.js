@@ -60,20 +60,8 @@
       });
     },
 
-    bindShowRemoveButton: function(){
-       $('tr.list-hamsters').mouseenter(function(e) {
-          $(e.currentTarget).find('td.remove-action').fadeIn(500);
-        });
-    },
-
-    bindHideRemoveButton: function(){
-      $('tr.list-hamsters').mouseleave(function(e) {
-        $(e.currentTarget).find('td.remove-action').fadeOut(500);
-      });
-    },
-
     bindRemoveHamster: function(){
-      $('.remove-hamster').on('click', function(e) {
+      $('.remove-hamster').on('ajax:success', function(e) {
         $(e.currentTarget).closest('tr').fadeOut(300, function() { $(this).remove() });
         setTimeout(function() {  hamster.calculateSpentTime(); }, 500);
       });
