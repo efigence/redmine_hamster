@@ -25,14 +25,14 @@ module RedmineHamster
           def change_issue_on_start
             if self.assigned_to_id == User.current.id
               status = User.current.work_time.try(:start_status_to)
-              self.update_attributes(status_id: status) if status
+              status.blank? ? self.touch : self.update_attributes(status_id: status)
             end
           end
 
           def change_issue_on_stop
             if self.assigned_to_id == User.current.id
               status = User.current.work_time.try(:stop_status_to)
-              self.update_attributes(status_id: status) if status
+              status.blank? ? self.touch : self.update_attributes(status_id: status)
             end
           end
         end
