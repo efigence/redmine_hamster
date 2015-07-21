@@ -16,6 +16,7 @@ GEM
     thread_safe (0.3.5)
     time_difference (0.4.2)
       activesupport
+    timecop (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
 
@@ -25,6 +26,7 @@ PLATFORMS
 DEPENDENCIES
   business_time
   time_difference
+  timecop
 
 BUNDLED WITH
-   1.10.1
+   1.10.5
