@@ -1,22 +1,19 @@
 <% if User.current.admin? || User.current.has_access_to_hamster? %>
-  <% @work = WorkTime.find_by(user_id: User.current.id).blank? ? WorkTime.new : WorkTime.find_by(user_id: User.current.id)%>
+  </fieldset>
+  <% work = user.work_time || WorkTime.new(user: user) %>
   <fieldset class="box tabular">
     <legend><%=l(:label_working_hours)%></legend>
     <p>
-      <label><%=l(:label_start_at)%></label>
-      <%= text_field_tag :start_at, @work.start_at.try(:strftime, "%H:%M"), id: 'start_at', class: 'timepicker', autocomplete: 'off' %><br/>
-      <label><%=l(:label_end_at)%></label>
-      <%= text_field_tag :end_at, @work.end_at.try(:strftime, "%H:%M"), id: 'end_at', class: 'timepicker', autocomplete: 'off'  %><br/><br/>
-      <label><%=l(:label_after_start)%></label>
-      <%= select_tag :start_status_to, options_from_collection_for_select(IssueStatus.where(is_closed: false), "id", "name", @work.start_status_to), include_blank: true %><br/>
-      <label><%=l(:label_after_stop)%></label>
-      <%= select_tag :stop_status_to, options_from_collection_for_select(IssueStatus.all, "id", "name", @work.stop_status_to), include_blank: true %><br/><br/>
-      <label><%=l(:label_multiple_start)%></label>
-      <%= check_box_tag :multi_start, @work.multi_start, @work.multi_start %><br/><br/>
-      <label><%=l(:label_raported)%></label>
-      <%= text_field_tag :days_ago, @work.days_ago, autocomplete: 'off', size: 4 %><%=l(:label_days_ago)%>
+      <%= form.fields_for work, remote: true do |f| %>
+        <%= f.text_field :start_at, value: work.start_at.try(:strftime, "%H:%M"), id: 'start_at', class: 'timepicker', autocomplete: 'off' %><br/>
+        <%= f.text_field :end_at, value: work.end_at.try(:strftime, "%H:%M"), id: 'end_at', class: 'timepicker', autocomplete: 'off'  %><br/><br/>
+        <%= f.select :start_status_to, options_from_collection_for_select(IssueStatus.where(is_closed: false), "id", "name", work.start_status_to), include_blank: true %><br/>
+        <%= f.select :stop_status_to, options_from_collection_for_select(IssueStatus.all, "id", "name", work.stop_status_to), include_blank: true %>
+        <em class='info'><%= l(:info_status_change) %></em><br/>
+        <%= f.check_box :multi_start %><br/><br/>
+        <%= f.text_field :days_ago, autocomplete: 'off', size: 4 %><%=l(:label_days_ago)%>
+      <% end %>
     </p>
-  </fieldset>
 <% end %>
 
 <% content_for :header_tags do %>

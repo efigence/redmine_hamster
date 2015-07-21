@@ -1,6 +1,8 @@
 <h3><%=l(:field_ready_to_raport)%></h3>
 <% if items && items.any? %>
   <% entries_by_day = RedmineHamster::LoadData.raported_time.group_by(&:spent_on) %>
+  <% collection_of_activities = activity_collection_for_select_options %>
+  <% last_activity_id = TimeEntry.select('user_id, activity_id, created_on').where(user_id: User.current.id).order('created_on DESC').first.activity_id %>
   <table class="list">
     <thead>
       <tr>
@@ -37,7 +39,7 @@
                 <%= t.hidden_field :spent_on, value: day %>
                 <%= t.hidden_field :hours, value: item.spend_time, class: 'hamster-hours' %>
                 <td class='raport-action btn-action'>
-                  <%= t.select :activity_id, activity_collection_for_select_options %>
+                  <%= t.select :activity_id, collection_of_activities.all.collect {|a| [a.name, a.id]}, selected: last_activity_id %>
                   <%= t.submit l(:button_raport), class: 'raport-hamster' %>
                 </td>
               <% end %>

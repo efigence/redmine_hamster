@@ -8,40 +8,17 @@ module RedmineHamster
         base.send(:include, InstanceMethods)
         base.class_eval do
           unloadable
-          after_filter :set_working_hours, only: [:account]
+          after_filter :save_work_time, only: [:account]
 
           private
 
-          def set_working_hours
-            multi = params[:multi_start].blank? ? false : true
-            if params[:start_at] && params[:end_at] || multi
-              if WorkTime.find_by(user_id: User.current.id).blank?
-                create_working_hours(multi)
-              else
-                update_working_hours(multi)
+          def save_work_time
+            if request.post? && params[:user] && params[:user][:work_time]
+              work_time = @user.work_time || @user.build_work_time
+              work_time.safe_attributes = params[:user][:work_time]
+              unless work_time.save
+                flash[:error] = work_time.errors.full_messages.first
               end
-            end
-          end
-
-          def create_working_hours multi = nil
-            w = WorkTime.create(user_id: User.current.id, start_at: params[:start_at], end_at: params[:end_at],
-                multi_start: multi, start_status_to: params[:start_status_to], stop_status_to: params[:stop_status_to],
-                days_ago: params[:days_ago])
-            flash[:error] = w.errors.full_messages.first if w.errors.any?
-          end
-
-          def update_working_hours multi = nil
-            w = WorkTime.find_by(user_id: User.current.id)
-            w.start_at = params[:start_at]
-            w.end_at = params[:end_at]
-            w.multi_start = multi
-            w.start_status_to = params[:start_status_to]
-            w.stop_status_to = params[:stop_status_to]
-            w.days_ago = params[:days_ago]
-            if w.save
-              true
-            else
-              flash[:error] = w.errors.full_messages.first
             end
           end
         end

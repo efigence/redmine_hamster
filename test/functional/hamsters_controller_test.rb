@@ -13,12 +13,19 @@ class HamstersControllerTest < Redmine::IntegrationTest
            :time_entries,
            :trackers,
            :email_addresses,
-           :groups_users
+           :groups_users,
+           :member_roles
 
   def setup
     Hamster.destroy_all
     HamsterIssue.destroy_all
     WorkTime.destroy_all
+    WorkflowTransition.destroy_all
+    WorkflowTransition.create!(:role_id => 2, :tracker_id => 1, :old_status_id => 1, :new_status_id => 2, :author => false, :assignee => false)
+    WorkflowTransition.create!(:role_id => 2, :tracker_id => 1, :old_status_id => 1, :new_status_id => 3, :author => true, :assignee => false)
+    WorkflowTransition.create!(:role_id => 2, :tracker_id => 1, :old_status_id => 1, :new_status_id => 4, :author => false, :assignee => true)
+    WorkflowTransition.create!(:role_id => 2, :tracker_id => 1, :old_status_id => 1, :new_status_id => 5, :author => true, :assignee => true)
+    WorkflowTransition.create!(:role_id => 2, :tracker_id => 1, :old_status_id => 2, :new_status_id => 3, :author => true, :assignee => true)
   end
 
   def test_start_issue_should_create_new_hamster_issue
@@ -95,11 +102,14 @@ class HamstersControllerTest < Redmine::IntegrationTest
       post hamsters_start_path, issue_id: 3
       assert_response 302
     end
-    hi = HamsterIssue.find_by(user_id: User.current.id, issue_id: 3).update_attributes(start_at: 2.business_days.ago)
     hi = HamsterIssue.find_by(user_id: User.current.id, issue_id: 3)
-    assert_difference 'Hamster.count', +3 do
-      post hamsters_stop_path, hamster_issue_id: hi.id
-      assert_equal User.current.working_hours, Hamster.second.spend_time, "Spend time should by #{User.current.working_hours}"
+    old_updated_on = Issue.find(3).updated_on
+    Timecop.freeze(DateTime.now + 2) do
+      assert_difference 'Hamster.count', +3 do
+        post hamsters_stop_path, hamster_issue_id: hi.id
+        assert_equal User.current.working_hours, Hamster.second.spend_time, "Spend time should by #{User.current.working_hours}"
+        assert_equal true, Issue.find(3).updated_on > old_updated_on, 'Should be greater'
+      end
     end
   end
 
@@ -123,7 +133,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_disabled_multi_start_issues
     log_user('dlopper', 'foo')
-    WorkTime.create(user_id: User.current.id, start_at: '09:00', end_at: '17:00', multi_start: false)
+    worktime_build({start_at: '09:00', end_at: '17:00', multi_start: false})
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
       assert_response 302
@@ -138,7 +148,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_enabled_multi_start_issues
     log_user('dlopper', 'foo')
-    WorkTime.create(user_id: User.current.id, start_at: '09:00', end_at: '17:00', multi_start: true)
+    worktime_build({start_at: '09:00', end_at: '17:00', multi_start: true})
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
       assert_response 302
@@ -153,7 +163,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_change_status_after_start_stop
     log_user('dlopper', 'foo')
-    WorkTime.create(user_id: User.current.id, start_at: '09:00', end_at: '17:00', start_status_to: 2, stop_status_to: 3)
+    worktime_build({start_at: '09:00', end_at: '17:00', start_status_to: 2, stop_status_to: 3})
     assert_difference 'HamsterIssue.count', +1 do
       post hamsters_start_path, issue_id: 3
       assert_response 302
@@ -185,7 +195,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
     # issue 3 -> status_id : 1
     log_user('jsmith', 'jsmith')
     allow_user(User.current)#as admin
-    WorkTime.create(user_id: User.current.id, start_status_to: 2, stop_status_to: 4)
+    worktime_build({start_status_to: 2, stop_status_to: 4})
     assert_difference 'HamsterIssue.count', +1 do
       assert_not_equal User.current.id, Issue.find(3).assigned_to_id, 'Id should be different'
       post hamsters_start_path, issue_id: 3
@@ -194,7 +204,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
     end
     post signout_path
     log_user('dlopper', 'foo')
-    WorkTime.create(user_id: User.current.id, start_status_to: 2, stop_status_to: 3)
+    worktime_build({start_status_to: 2, stop_status_to: 3})
     assert_difference 'HamsterIssue.count', +1 do
       assert_equal User.current.id, Issue.find(3).assigned_to_id, 'Issue should assigne to this user!'
       post hamsters_start_path, issue_id: 3
@@ -240,7 +250,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_should_return_user_data_from_work_time
     log_user('jsmith', 'jsmith')
-    WorkTime.create(user_id: User.current.id, start_at: '10:00', end_at: '18:00', multi_start: true, days_ago: 2)
+    worktime_build({start_at: '10:00', end_at: '18:00', multi_start: true, days_ago: 2})
     assert_not_equal nil, User.current.work_time, 'Should not be nil'
     assert_equal '10:00', User.current.start_at, 'Schould equal user start_at'
     assert_equal '18:00', User.current.end_at, 'Schould equal user end_at'
@@ -250,7 +260,32 @@ class HamstersControllerTest < Redmine::IntegrationTest
     assert_equal 8.5, User.current.working_hours, 'Should equal user working hours'
   end
 
+  def test_should_not_change_issue_status_if_is_not_allowed_to
+    log_user('dlopper', 'foo')
+    worktime_build({start_status_to: 6, stop_status_to: 1})
+    Issue.first.update_attributes(assigned_to_id: User.current.id)
+    assert_difference 'HamsterIssue.count', +1 do
+      post hamsters_start_path, issue_id: 1
+      assert_response 302
+    end
+    assert_equal 1, Issue.find(1).status_id, 'Status should not be changed'
+    User.current.hamster_issues.destroy_all
+    User.current.work_time.destroy
+    worktime_build({start_status_to: 2, stop_status_to: 1})
+    assert_difference 'HamsterIssue.count', +1 do
+      post hamsters_start_path, issue_id: 1
+      assert_response 302
+    end
+    assert_equal 2, Issue.find(1).status_id, 'Status should be changed'
+  end
+
   private
+
+  def worktime_build params
+    WorkTime.destroy_all
+    wt = User.current.build_work_time(params)
+    wt.save
+  end
 
   def allow_user user
     user.admin = true

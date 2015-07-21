@@ -2,15 +2,15 @@ en:
   label_hamster: Hamster
   label_mru: 'Recently used issues'
   label_working_hours: Working hours
-  label_start_at: Start at
-  label_end_at: End at
   label_time_summary: 'Hamster summary: '
   label_already_raported: 'Currently reported: '
-  label_multiple_start: Let me start issues parallel
-  label_after_start: 'On start set status:'
-  label_after_stop: 'On stop set status:'
-  label_raported: 'Issue time report '
   label_days_ago: " days ago to date today."
+  field_start_at: Start at
+  field_end_at: End at
+  field_multi_start: Let me start issues parallel
+  field_start_status_to: 'On start set status:'
+  field_stop_status_to: 'On stop set status:'
+  field_days_ago: 'Issue time report '
   field_spend_time: Spend time
   field_start_at: Start at
   field_started_issues: Started issues
@@ -24,3 +24,4 @@ en:
   notice_account_work_time: Working time is invalid
   settings:
     allowed_groups_to_use_hamster: Groups allowed to use Hamster
+  info_status_change: 'Only user assigned to issue can change status. It also depends from workflow specified for role.'

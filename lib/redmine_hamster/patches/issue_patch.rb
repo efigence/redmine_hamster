@@ -1,5 +1,4 @@
 require_dependency 'issue'
-
 module RedmineHamster
   module Patches
     module IssuePatch
@@ -22,17 +21,14 @@ module RedmineHamster
             self.hamster_issues.find_by(user_id: User.current.id).blank? ? false : true
           end
 
-          def change_issue_on_start
-            if self.assigned_to_id == User.current.id
-              status = User.current.work_time.try(:start_status_to)
-              status.blank? ? self.touch : self.update_attributes(status_id: status)
-            end
-          end
-
-          def change_issue_on_stop
-            if self.assigned_to_id == User.current.id
-              status = User.current.work_time.try(:stop_status_to)
-              status.blank? ? self.touch : self.update_attributes(status_id: status)
+          def change_issue_status action
+            if self.assigned_to_id == User.current.id && action
+              status = User.current.work_time.try(action)
+              if status.blank? || !self.new_statuses_allowed_to(User.current).map(&:id).include?(status)
+                self.touch
+              else
+                self.update_attributes(status_id: status)
+              end
             end
           end
         end

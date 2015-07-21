@@ -21,7 +21,7 @@ class HamsterIssue < ActiveRecord::Base
         h = Hamster.create_or_update(date.to_datetime, end_time, spent_time, self.issue_id, self.user_id)
       end
     end
-    self.issue.change_issue_on_stop
+    self.issue.change_issue_status(:stop_status_to)
     self.destroy if h
   end
 
