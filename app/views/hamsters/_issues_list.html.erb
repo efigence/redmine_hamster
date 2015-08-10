@@ -7,7 +7,7 @@
         <th><%=l(:field_project)%></th>
         <th><%=l(:field_tracker)%></th>
         <th><%=l(:field_subject)%></th>
-        <th><%= link_to '', '#', class: "sort #{order.downcase}", title: l(:title_sort), remote: true, id: "sort-issues", :"data-order"=> order %></th>
+        <th><%= link_to '', hamsters_index_path(order: order), class: "sort #{order.downcase}", title: l(:title_sort), id: "sort-issues", :"data-order"=> order %></th>
       </tr>
     </thead>
     <tbody>

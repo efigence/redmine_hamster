@@ -27,20 +27,6 @@
       if( $('.sort').length > 1 ){
         $('.sort').last().hide();
       }
-      var url = window.location.href;
-      $('#sort-issues').on('click', function(){
-        order = $(this).data('order');
-        $.ajax({
-          url: url,
-          type: "GET",
-          data: { 'order' : order },
-          success: function(data){
-            document.open();
-            document.write(data);
-            document.close();
-          }
-        })
-      });
     },
 
     bindShowButtonSave: function(){
@@ -79,7 +65,7 @@
           to_add = parseFloat($(this).closest('tr').find('#hamster_spend_time').val());
           current_val = parseFloat($(this).closest('tr').parent().find('.already-raported').html());
           new_val = to_add + current_val;
-          $(this).closest('tr').parent().find('.already-raported').html(new_val);
+          $(this).closest('tr').parent().find('.already-raported').html((new_val).toFixed(2));
         }
       });
     }

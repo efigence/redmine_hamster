@@ -2,7 +2,7 @@
 <% if items && items.any? %>
   <% entries_by_day = RedmineHamster::LoadData.raported_time.group_by(&:spent_on) %>
   <% collection_of_activities = activity_collection_for_select_options %>
-  <% last_activity_id = TimeEntry.select('user_id, activity_id, created_on').where(user_id: User.current.id).order('created_on DESC').first.activity_id %>
+  <% last_activity_id = TimeEntry.select('user_id, activity_id, created_on').where(user_id: User.current.id).order('created_on DESC').first.try(:activity_id) %>
   <table class="list">
     <thead>
       <tr>
