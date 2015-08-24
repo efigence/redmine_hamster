@@ -24,7 +24,7 @@ class HamstersController < ApplicationController
   end
 
   def stop
-    @hamster_issue.stop
+    @hamster_issue.stop if @hamster_issue
     redirect_to hamsters_index_url
   end
 
@@ -69,7 +69,7 @@ class HamstersController < ApplicationController
   end
 
   def find_hamster_issue
-    @hamster_issue = HamsterIssue.my.find(params[:hamster_issue_id])
+    @hamster_issue = HamsterIssue.my.where(id: params[:hamster_issue_id]).first
   end
 
   def find_hamster
