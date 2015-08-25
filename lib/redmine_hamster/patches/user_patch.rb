@@ -11,7 +11,7 @@ module RedmineHamster
           has_many :hamsters
 
           def working_hours
-            if self.work_time.blank?
+            if self.work_time.try(:start_at).blank? && self.work_time.try(:end_at).blank?
               WorkTime::DEFAULT
             else
               TimeDifference.between(self.work_time.start_at, self.work_time.end_at).in_hours
