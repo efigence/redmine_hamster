@@ -21,6 +21,8 @@ en:
   title_sort: Sort by updated on
   title_hamster_stop: Hamster stop issue
   title_hamster_start: Hamster start issue
+  title_remove_hamsters: Remove all hamsters
+  confirm_remove_hamsters: "Czy na pewno?"
   notice_account_work_time: Working time is invalid
   settings:
     allowed_groups_to_use_hamster: Groups allowed to use Hamster

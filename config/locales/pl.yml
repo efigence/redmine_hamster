@@ -21,6 +21,8 @@ pl:
   title_sort: Sortuj po dacie aktualizacji
   title_hamster_stop: Hamster zatrzymaj zagadnienie
   title_hamster_start: Hamster rozpocznij zagadnienie
+  title_remove_hamsters: Usuń wszystkie
+  confirm_remove_hamsters: "Are you sure?"
   notice_account_work_time: Czas pracy jest nieprawidłowy
   settings:
     allowed_groups_to_use_hamster: 'Grupy uprawnione do używania Hamster-a'

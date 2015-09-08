@@ -279,6 +279,39 @@ class HamstersControllerTest < Redmine::IntegrationTest
     assert_equal 2, Issue.find(1).status_id, 'Status should be changed'
   end
 
+  def test_destroy_all_user_hamsters
+    log_user('dlopper', 'foo')
+    ids = Issue.my_open.collect(&:id)
+    assert_difference 'Hamster.count', +2 do
+      post hamsters_start_path, issue_id: ids.first
+      post hamsters_start_path, issue_id: ids.last
+      post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
+    end
+    assert_difference 'Hamster.count', -2 do
+      post remove_hamsters_path
+    end
+    assert_equal 0, Hamster.my.count, 'Should be empty array!'
+  end
+
+  def test_should_remove_only_current_user_hamsters
+    log_user('jsmith', 'jsmith')
+    allow_user(User.current)
+    assert_difference 'Hamster.count', +1 do
+      post hamsters_start_path, issue_id: Issue.my_open.last.id
+      post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
+    end
+    post signout_path
+    log_user('dlopper', 'foo')
+    assert_difference 'Hamster.count', +1 do
+      post hamsters_start_path, issue_id: Issue.my_open.last.id
+      post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
+    end
+    assert_difference 'Hamster.count', -1 do
+      post remove_hamsters_path
+    end
+    assert_equal 1, Hamster.count, 'Wrong hamsters count'
+  end
+
   private
 
   def worktime_build params

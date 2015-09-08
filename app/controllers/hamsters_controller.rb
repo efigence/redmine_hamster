@@ -38,6 +38,11 @@ class HamstersController < ApplicationController
     render nothing: true
   end
 
+  def destroy_all
+    Hamster.my.try(:destroy_all)
+    redirect_to hamsters_index_url
+  end
+
   def raport_time
     time_entry = TimeEntry.new(:project => @project, :issue => @issue, :user => User.current, :spent_on => @date)
     time_entry.safe_attributes = params[:time_entry]

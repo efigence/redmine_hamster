@@ -12,7 +12,7 @@
         <th><%=l(:field_subject)%></th>
         <th><%=l(:field_spend_time)%></th>
         <th></th>
-        <th></th>
+        <th><%= link_to '', remove_hamsters_path, method: :post, :class => 'icon icon-del destroy-all', title: l(:title_remove_hamsters), :data => {:confirm => l(:confirm_remove_hamsters)} %></th>
       </tr>
     </thead>
 
