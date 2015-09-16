@@ -27,6 +27,7 @@ module RedmineHamster
               if status.blank? || !self.new_statuses_allowed_to(User.current).map(&:id).include?(status)
                 self.touch
               else
+                self.init_journal(User.current)
                 self.update_attributes(status_id: status)
               end
             end

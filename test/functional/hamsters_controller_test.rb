@@ -164,7 +164,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
   def test_change_status_after_start_stop
     log_user('dlopper', 'foo')
     worktime_build({start_at: '09:00', end_at: '17:00', start_status_to: 2, stop_status_to: 3})
-    assert_difference 'HamsterIssue.count', +1 do
+    assert_difference ['HamsterIssue.count', 'Journal.count'], +1 do
       post hamsters_start_path, issue_id: 3
       assert_response 302
       assert_equal 2, Issue.find(3).status_id, "Wrong status id after start"
