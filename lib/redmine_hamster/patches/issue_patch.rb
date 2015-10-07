@@ -8,8 +8,9 @@ module RedmineHamster
         base.class_eval do
           unloadable
           has_many :hamster_issues
+          has_many :hamster_journals
           has_many :hamsters
-          scope :my_open, -> {  visible.open.
+          scope :my_only_open, -> {  visible.open.
                                 where(assigned_to_id: ([User.current.id] + User.current.group_ids),
                                       projects: { status: Project::STATUS_ACTIVE }).
                                 includes(:status, :project, :tracker, :priority).

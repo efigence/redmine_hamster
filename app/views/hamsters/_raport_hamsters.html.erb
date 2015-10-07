@@ -23,13 +23,15 @@
         </tr>
         <% for item in items[day] %>
             <tr id="<%= day %>" class="list-hamsters <%= day %>">
-              <td class="issue"><%= link_to item.issue_id, issue_path(item.issue) %></td>
+              <td class="issue"><%= link_to item.issue_id, issue_path(item.issue) %>
+                <%= link_to '', '#', class: 'hamster-journal collapsible collapsed', id: item.id, title: l(:title_journal) if item.hamster_journals.any? %>
+              </td>
               <td class="project"><%= link_to_project(item.issue.project) %></td>
               <td class="tracker"><%= item.issue.tracker %></td>
               <td class="subject"><%= link_to item.issue.subject.truncate(30), issue_path(item.issue) %></td>
               <%= form_for item, :remote => true do |f| %>
                 <td class="spend_time">
-                  <%= f.text_field :spend_time, autocomplete: 'off' %>h 
+                  <%= f.text_field :spend_time, autocomplete: 'off', class: "input-#{item.id}"%>h
                   <%= f.submit l(:button_save), class: 'action-save btn-action' %>
                 </td>
               <% end %>
@@ -43,8 +45,13 @@
                   <%= t.submit l(:button_raport), class: 'raport-hamster' %>
                 </td>
               <% end %>
-              <td class='remove-action'><%= link_to '', item, method: :delete, remote: true, :class => 'icon icon-del remove-hamster' %></td>
+              <td class='remove-action'>
+                <%= link_to '', item, method: :delete, remote: true, :class => 'icon icon-del remove-hamster' %>
+              </td>
             </tr>
+            <tbody id="details-hamster-<%= item.id%>" style='display: none;'>
+              <%= render :partial => 'hamsters/hamster_journal', locals: {item: item } %>
+            </tbody>
         <% end %>
         <tr id="<%= day %>">
           <th class='day-info' colspan="7">

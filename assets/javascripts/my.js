@@ -5,8 +5,8 @@
     },
 
     bindTimePicker: function(){
-      $('#start_at').timepicker({ timeFormat: 'HH:mm' });
-      $('#end_at').timepicker({ timeFormat: 'HH:mm' });
+      $('#start_at').timepicker({ timeFormat: 'H:i' });
+      $('#end_at').timepicker({ timeFormat: 'H:i' });
     }
   }
 

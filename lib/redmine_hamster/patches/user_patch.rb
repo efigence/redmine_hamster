@@ -9,6 +9,8 @@ module RedmineHamster
           has_one :work_time
           has_many :hamster_issues
           has_many :hamsters
+          has_many :hamster_journals
+
 
           def working_hours
             if self.work_time.try(:start_at).blank? && self.work_time.try(:end_at).blank?
@@ -47,7 +49,7 @@ module RedmineHamster
           end
 
           def hamster_groups_with_access
-            Setting.plugin_redmine_hamster["groups"] || []
+            Setting.plugin_redmine_hamster["groups"].map(&:to_s) || []
           end
 
         end

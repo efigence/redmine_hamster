@@ -19,6 +19,7 @@ issues_001:
   lft: 1
   rgt: 2
   lock_version: 3
+  # position: 1
 issues_002: 
   created_on: 2006-07-19 21:04:21 +02:00
   project_id: 1
@@ -40,6 +41,7 @@ issues_002:
   rgt: 2
   lock_version: 3
   done_ratio: 30
+  # position: 2
 issues_003: 
   created_on: 2006-07-19 21:07:27 +02:00
   project_id: 1
@@ -59,6 +61,7 @@ issues_003:
   root_id: 3
   lft: 1
   rgt: 2
+  # position: 3
 issues_004: 
   created_on: <%= 5.days.ago.to_s(:db) %>
   project_id: 2
@@ -76,6 +79,7 @@ issues_004:
   root_id: 4
   lft: 1
   rgt: 2
+  # position: 4
 issues_005: 
   created_on: <%= 5.days.ago.to_s(:db) %>
   project_id: 3
@@ -93,6 +97,7 @@ issues_005:
   root_id: 5
   lft: 1
   rgt: 2
+  # position: 5
 issues_006: 
   created_on: <%= 1.minute.ago.to_s(:db) %>
   project_id: 5
@@ -112,6 +117,7 @@ issues_006:
   root_id: 6
   lft: 1
   rgt: 2
+  # position: 6
 issues_007: 
   created_on: <%= 10.days.ago.to_s(:db) %>
   project_id: 1
@@ -132,6 +138,7 @@ issues_007:
   root_id: 7
   lft: 1
   rgt: 2
+  # position: 7
 issues_008: 
   created_on: <%= 10.days.ago.to_s(:db) %>
   project_id: 1
@@ -153,6 +160,7 @@ issues_008:
   lft: 1
   rgt: 2
   closed_on: <%= 3.days.ago.to_s(:db) %>
+  # position: 8
 issues_009: 
   created_on: <%= 1.minute.ago.to_s(:db) %>
   project_id: 5
@@ -172,6 +180,7 @@ issues_009:
   root_id: 9
   lft: 1
   rgt: 2
+  # position: 9
 issues_010: 
   created_on: <%= 1.minute.ago.to_s(:db) %>
   project_id: 5
@@ -191,6 +200,7 @@ issues_010:
   root_id: 10
   lft: 1
   rgt: 2
+  # position: 10
 issues_011: 
   created_on: <%= 3.days.ago.to_s(:db) %>
   project_id: 1
@@ -211,6 +221,7 @@ issues_011:
   lft: 1
   rgt: 2
   closed_on: <%= 1.day.ago.to_s(:db) %>
+  # position: 11
 issues_012: 
   created_on: <%= 3.days.ago.to_s(:db) %>
   project_id: 1
@@ -231,6 +242,7 @@ issues_012:
   lft: 1
   rgt: 2
   closed_on: <%= 1.day.ago.to_s(:db) %>
+  # position: 12
 issues_013:
   created_on: <%= 5.days.ago.to_s(:db) %>
   project_id: 3
@@ -248,6 +260,7 @@ issues_013:
   root_id: 13
   lft: 1
   rgt: 2
+  # position: 13
 issues_014:
   id: 14
   created_on: <%= 15.days.ago.to_s(:db) %>
@@ -266,3 +279,4 @@ issues_014:
   root_id: 14
   lft: 1
   rgt: 2
+  # position: 14

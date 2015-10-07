@@ -24,6 +24,9 @@
 </div>
 
 <% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'jquery.timepicker', :plugin => 'redmine_hamster', :media => 'all' %>
   <%= stylesheet_link_tag 'redmine_hamster', :plugin => 'redmine_hamster', :media => 'all' %>
+  <%= javascript_include_tag 'jquery.timepicker',  :plugin => 'redmine_hamster' %>
   <%= javascript_include_tag 'redmine_hamster',  :plugin => 'redmine_hamster' %>
+  <%= javascript_include_tag 'moment',  :plugin => 'redmine_hamster' %>
 <% end %>

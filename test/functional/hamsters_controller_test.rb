@@ -14,7 +14,8 @@ class HamstersControllerTest < Redmine::IntegrationTest
            :trackers,
            :email_addresses,
            :groups_users,
-           :member_roles
+           :member_roles,
+           :enumerations
 
   def setup
     Hamster.destroy_all
@@ -281,7 +282,7 @@ class HamstersControllerTest < Redmine::IntegrationTest
 
   def test_destroy_all_user_hamsters
     log_user('dlopper', 'foo')
-    ids = Issue.my_open.collect(&:id)
+    ids = Issue.my_only_open.collect(&:id)
     assert_difference 'Hamster.count', +2 do
       post hamsters_start_path, issue_id: ids.first
       post hamsters_start_path, issue_id: ids.last
@@ -297,19 +298,53 @@ class HamstersControllerTest < Redmine::IntegrationTest
     log_user('jsmith', 'jsmith')
     allow_user(User.current)
     assert_difference 'Hamster.count', +1 do
-      post hamsters_start_path, issue_id: Issue.my_open.last.id
+      post hamsters_start_path, issue_id: Issue.my_only_open.last.id
       post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
     end
     post signout_path
     log_user('dlopper', 'foo')
     assert_difference 'Hamster.count', +1 do
-      post hamsters_start_path, issue_id: Issue.my_open.last.id
+      post hamsters_start_path, issue_id: Issue.my_only_open.last.id
       post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
     end
     assert_difference 'Hamster.count', -1 do
       post remove_hamsters_path
     end
     assert_equal 1, Hamster.count, 'Wrong hamsters count'
+  end
+
+  def test_journal_for_hamster
+    log_user('jsmith', 'jsmith')
+    allow_user(User.current)
+    issue_id = Issue.my_only_open.last.id
+    Timecop.freeze(DateTime.now - 1.hours) do
+      assert_difference 'Hamster.count', +1 do
+        assert_difference 'HamsterJournal.count', + 1 do
+          post hamsters_start_path, issue_id: issue_id
+          post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
+        end
+      end
+    end
+    assert_no_difference 'Hamster.count' do
+      assert_difference 'HamsterJournal.count', + 1 do
+        post hamsters_start_path, issue_id: issue_id
+        post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
+      end
+    end
+    assert_equal 2, Hamster.my.first.hamster_journals.count, 'Should be 2 items in journal'
+    Timecop.freeze(DateTime.now - 1.hours) do
+      post hamsters_start_path, issue_id: issue_id
+    end
+    post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
+    assert_equal "1.0", HamsterJournal.last.summary, 'Summary time should equal 1 hour'
+    Timecop.freeze(DateTime.now - 0.5.hours) do
+      post hamsters_start_path, issue_id: issue_id
+    end
+    post hamsters_stop_path, hamster_issue_id: HamsterIssue.my.first.id
+    assert_equal "0.5", HamsterJournal.last.summary, 'Summary time should equal half an hour'
+    h = Hamster.last
+    assert_equal 1.5, h.spend_time, 'Hamster should equal 1.5 hours'
+    assert_equal h.spend_time, h.hamster_journals.sum('summary').to_f, 'Hamster spend time should equal to journal time'
   end
 
   private

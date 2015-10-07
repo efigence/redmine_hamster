@@ -5,6 +5,8 @@ en:
   label_time_summary: 'Hamster summary: '
   label_already_raported: 'Currently reported: '
   label_days_ago: " days ago to date today."
+  label_edit_from: "Edit start time"
+  label_edit_to: "Edit end time"
   field_start_at: Start at
   field_end_at: End at
   field_multi_start: Let me start issues parallel
@@ -22,6 +24,7 @@ en:
   title_hamster_stop: Hamster stop issue
   title_hamster_start: Hamster start issue
   title_remove_hamsters: Remove all hamsters
+  title_journal: Details of working time
   confirm_remove_hamsters: "Czy na pewno?"
   notice_account_work_time: Working time is invalid
   settings:

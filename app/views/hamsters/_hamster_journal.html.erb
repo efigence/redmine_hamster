@@ -1,0 +1,24 @@
+<td class='journal-devision' colspan="7"></td>
+<% item.hamster_journals.each_with_index do |journal, index| %>
+  <tr id="<%=journal.id%>" data-hamster="<%= journal.hamster_id %>" class='list'>
+    <td colspan="2" class='journal-devision' style='border:none;'></td>
+    <td>#<%= index + 1 %></td>
+    <td colspan="2">
+      <em class='time-from' title="<%= l(:label_edit_from)%>"><%= journal.from.to_time.strftime("%H:%M")%></em> - 
+      <em class='time-to' title="<%= l(:label_edit_to)%>"><%= journal.to.to_time.strftime("%H:%M") %></em>
+      <a href='#' class='save-journal icon icon-checked' data-journal="<%= journal.id %>" title="<%= l(:button_save)%>" style='display:none;'></a>
+    </td>
+    <td class='jsummary'><%= journal.summary %></td>
+    <td><%= link_to '', journal, method: :delete, remote: true, :class => 'icon icon-del remove-journal-item' %></td>
+    <td style="display: none;">
+      <%= form_for journal, :remote => true do |f| %>
+        <%= f.hidden_field :from, value: journal.from, class: 'time-from' %>
+        <%= f.hidden_field :to, value: journal.to, class: 'time-to' %>
+        <%= f.hidden_field :summary, value: journal.summary, class: 'summary' %>
+        <%= f.hidden_field :hamster_sum, value: '', class: 'hamster_sum' %>
+        <%= f.submit l(:button_save), class: 'action-save btn-action' %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+<td class='journal-devision' colspan="7"></td>

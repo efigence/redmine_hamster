@@ -5,6 +5,8 @@ pl:
   label_time_summary: 'Hamster podsumowanie: '
   label_already_raported: 'Aktualnie zaraportowano: '
   label_days_ago: " dni temu do dziś."
+  label_edit_from: "Edytuj czas rozpoczęcia"
+  label_edit_to: "Edytuj czas zakończenia"
   field_start_at: Godzina rozpoczęcia
   field_end_at: Godzina zakończenia
   field_multi_start: Pozwól rozpoczynać zagadnienia równolegle
@@ -22,6 +24,7 @@ pl:
   title_hamster_stop: Hamster zatrzymaj zagadnienie
   title_hamster_start: Hamster rozpocznij zagadnienie
   title_remove_hamsters: Usuń wszystkie
+  title_journal: Szczegóły czasu pracy
   confirm_remove_hamsters: "Are you sure?"
   notice_account_work_time: Czas pracy jest nieprawidłowy
   settings:

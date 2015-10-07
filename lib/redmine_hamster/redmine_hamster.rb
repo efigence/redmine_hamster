@@ -4,7 +4,7 @@ module RedmineHamster
       
       def my_issues opt = nil
         opt = opt || 'DESC'
-        Issue.my_open.order("#{Issue.table_name}.updated_on #{opt}").to_a
+        Issue.my_only_open.order("#{Issue.table_name}.updated_on #{opt}").to_a
       end
 
       def my_active_hamsters
