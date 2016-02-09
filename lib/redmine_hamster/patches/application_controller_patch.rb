@@ -1,5 +1,4 @@
-require_dependency 'my_controller'
-require 'pry'
+require_dependency 'application_controller'
 
 module RedmineHamster
   module Patches
