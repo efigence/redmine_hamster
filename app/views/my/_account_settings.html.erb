@@ -11,6 +11,7 @@
         <%= f.select :stop_status_to, options_from_collection_for_select(IssueStatus.all, "id", "name", work.stop_status_to), include_blank: true %>
         <em class='info'><%= l(:info_status_change) %></em><br/>
         <%= f.check_box :multi_start %><br/><br/>
+        <%= f.check_box :show_current_issue %><br/><br/>
         <%= f.text_field :days_ago, autocomplete: 'off', size: 4 %><%=l(:label_days_ago)%>
       <% end %>
     </p>

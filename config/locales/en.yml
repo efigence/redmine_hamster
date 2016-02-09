@@ -10,11 +10,11 @@ en:
   field_start_at: Start at
   field_end_at: End at
   field_multi_start: Let me start issues parallel
+  field_show_current_issue: Show active task on the menu bar
   field_start_status_to: 'On start set status:'
   field_stop_status_to: 'On stop set status:'
   field_days_ago: 'Issue time report '
   field_spend_time: Spend time
-  field_start_at: Start at
   field_started_issues: Started issues
   field_ready_to_raport: Issue ready to raport
   button_raport: Raport
@@ -30,3 +30,5 @@ en:
   settings:
     allowed_groups_to_use_hamster: Groups allowed to use Hamster
   info_status_change: 'Only user assigned to issue can change status. It also depends from workflow specified for role.'
+  info_time_spend: "Time spent"
+  info_current_issue: "Current task"

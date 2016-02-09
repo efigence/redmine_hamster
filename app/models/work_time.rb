@@ -7,7 +7,7 @@ class WorkTime < ActiveRecord::Base
   belongs_to :user
 
   attr_protected :user_id
-  safe_attributes :user_id, :start_at, :end_at, :multi_start, :start_status_to, :stop_status_to, :days_ago
+  safe_attributes :user_id, :start_at, :end_at, :multi_start, :start_status_to, :stop_status_to, :days_ago, :show_current_issue
 
   validates :user_id, presence: true
   validates :end_at, presence: true, if: :start_at

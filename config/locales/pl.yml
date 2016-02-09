@@ -1,7 +1,7 @@
 pl:
   label_hamster: Hamster
   label_mru: 'Ostatnio używane zagadnienia'
-  label_working_hours: Godziny pracy
+  label_working_hours: Hamster
   label_time_summary: 'Hamster podsumowanie: '
   label_already_raported: 'Aktualnie zaraportowano: '
   label_days_ago: " dni temu do dziś."
@@ -10,6 +10,7 @@ pl:
   field_start_at: Godzina rozpoczęcia
   field_end_at: Godzina zakończenia
   field_multi_start: Pozwól rozpoczynać zagadnienia równolegle
+  field_show_current_issue: Pokazuj aktualne zadanie w menu
   field_start_status_to: 'Po starcie zmień status na:'
   field_stop_status_to: 'Po zatrzymaniu zmień status na:'
   field_days_ago: 'Zagadnienia zaraportowane '
@@ -30,3 +31,5 @@ pl:
   settings:
     allowed_groups_to_use_hamster: 'Grupy uprawnione do używania Hamster-a'
   info_status_change: "Status może zmienić tylko użytkownik przypisany do zagadnienia. Zmiana statusu zależy również od work flow określonego dla roli."
+  info_time_spend: "Spędzony czas"
+  info_current_issue: "Bieżące zagadnienie"

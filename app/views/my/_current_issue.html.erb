@@ -1,0 +1,16 @@
+<script>
+  $(document).tooltip({
+    content: function () {
+      return $(this).attr('title');
+    }
+  });
+  $(window).load(function () {
+    <% if @my_current_issue && @show_current %>
+    var curr_out = '<div style="float:right; margin-right:8px;"><%= l(:info_current_issue) %>: <a href="/issues/' +
+        '<%= @my_current_issue.id %>" title="<b><%= l(:field_subject) %>:</b><br><%= @my_current_issue.subject.truncate(20) %><br>' +
+        '<b><%= l(:info_time_spend) %>:</b><br><%= ((Time.now - HamsterIssue.find_by(user: User.current).start_at) / 60).round %> ' +
+        'min.">#<%= @my_current_issue.id %></a></div>';
+    $('#top-menu').append(curr_out);
+    <% end %>
+  });
+</script>
