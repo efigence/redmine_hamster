@@ -5,7 +5,3 @@ gem 'business_time'
 group :test do
   gem 'timecop'
 end
-group :development do
-  gem 'rails_db'
-  gem 'pry'
-end
