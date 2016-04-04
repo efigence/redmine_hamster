@@ -29,8 +29,8 @@ Developed and tested on Redmine 3.0.3.
 
 ## API
 
-###### To connect with API you have to make a request with additional header:
-###### `X-Redmine-API-Key: users_api_key`
+To connect with API you have to make a request with additional header:
+`X-Redmine-API-Key: users_api_key`
 (e.g. `X-Redmine-API-Key: da6376b020ec96ea00bf86c41e842a40c5a817fe`) 
 
 1. hamster/index
