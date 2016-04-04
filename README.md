@@ -29,6 +29,10 @@ Developed and tested on Redmine 3.0.3.
 
 ## API
 
+###### To connect with API you have to make a request with additional header:
+###### `X-Redmine-API-Key: users_api_key`
+(e.g. `X-Redmine-API-Key: da6376b020ec96ea00bf86c41e842a40c5a817fe`) 
+
 1. hamster/index
   * method: GET
   * params: none
@@ -46,18 +50,18 @@ Developed and tested on Redmine 3.0.3.
   * params: none
 6. hamster/start
   * method: POST
-  * params: `issue_id: Integer (Issue ID)`
+  * params: `issue_id: Integer` (Issue ID)
 7. hamster/stop
   * method: POST
-  * params: `hamster_issue_id: Integer (Hamster ID)`
+  * params: `hamster_issue_id: Integer` (Hamster ID)
 8. hamster/update
   * method: PATCH
   * params:
-    + `id : Integer (Hamster ID)`
-    + `hamster: { spend_time: Float } (Hash with new spend_time value)`
+    + `id : Integer` (Hamster ID)
+    + `hamster: { spend_time: Float }` (Hash with new spend_time value)
 9. hamster/delete
   * method: DELETE
-  * params: `id: Integer (Hamster ID)`
+  * params: `id: Integer` (Hamster ID)
 10. hamster/raport_time
   * method: POST
   * params: `time_entry: { issue_id: Integer, spent_on: Date, hamster_id: Integer, hours: hamster.spend_time }` (Hash with Issue ID, date (format: yyyy-mm-dd), Hamster ID)
