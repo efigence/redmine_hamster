@@ -1,7 +1,7 @@
 class WorkTime < ActiveRecord::Base
   include Redmine::SafeAttributes
   unloadable
-
+  after_save :invalidate_cache
   DEFAULT = 8.0 #hours
 
   belongs_to :user
@@ -12,4 +12,8 @@ class WorkTime < ActiveRecord::Base
   validates :user_id, presence: true
   validates :end_at, presence: true, if: :start_at
   validates :start_at, presence: true, if: :end_at
+
+  def invalidate_cache
+    Rails.cache.delete("active_issue_for_#{User.current.id}")
+  end
 end

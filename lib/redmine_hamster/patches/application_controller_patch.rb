@@ -12,10 +12,17 @@ module RedmineHamster
           before_action :find_menu
 
           def find_menu
-            if User.current.logged? && (User.current.admin? || User.current.has_access_to_hamster?) && HamsterIssue.my.any?
+            if active_issues_visible? && HamsterIssue.my.any?
               @my_current_issue = HamsterIssue.my.first.issue
               @show_current = WorkTime.find_by(user: User.current)
             end
+          end
+
+          private
+
+          def active_issues_visible?
+            user = User.current
+            user.logged? && user.has_access_to_hamster? && user.work_time.try(:show_current_issue)
           end
         end
       end
