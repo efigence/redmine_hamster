@@ -15,7 +15,6 @@ pl:
   field_stop_status_to: 'Po zatrzymaniu zmień status na:'
   field_days_ago: 'Zagadnienia zaraportowane '
   field_spend_time: Spędzony czas
-  field_start_at: Data rozpoczęcia
   field_started_issues: Rozpoczęte zagadnienia
   field_ready_to_raport: Zagadnienia gotowe do zaraportowania
   button_raport: Zaraportuj
