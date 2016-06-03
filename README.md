@@ -45,7 +45,7 @@ To connect with API you have to make a request with additional header:
 4. hamster/my_active_hamsters
   * method: GET
   * params: none
-5. hamster/my_ready_to_raport_hamsters
+5. hamster/my_ready_to_report_hamsters
   * method: GET
   * params: none
 6. hamster/start
@@ -62,9 +62,9 @@ To connect with API you have to make a request with additional header:
 9. hamster/delete
   * method: DELETE
   * params: `id: Integer` (Hamster ID)
-10. hamster/raport_time
+10. hamster/report_time
   * method: POST
-  * params: `time_entry: { issue_id: Integer, spent_on: Date, hamster_id: Integer, hours: hamster.spend_time }` (Hash with Issue ID, date (format: yyyy-mm-dd), Hamster ID)
+  * params: `hamster_id: Integer `
 11. hamster_journals/hamster_journals
   * method: GET
   * params: `hamster_id: Integer` (Hamster ID)

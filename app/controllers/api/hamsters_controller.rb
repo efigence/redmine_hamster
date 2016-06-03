@@ -58,7 +58,7 @@ class Api::HamstersController < ApplicationController
   end
 
   def raport_time
-    time_entry = TimeEntry.new(:project => @project, :issue => @issue, :user => User.current, :spent_on => @date)
+    time_entry = TimeEntry.new(:project => @project, :issue => @issue, :user => User.current, :spent_on => @date, hours: @hours)
     time_entry.safe_attributes = params[:time_entry]
 
     if time_entry.project && !User.current.allowed_to?(:log_time, time_entry.project)
@@ -93,10 +93,11 @@ class Api::HamstersController < ApplicationController
   end
 
   def prepare_data
-    @hamster = Hamster.my.find(params[:time_entry][:hamster_id])
-    @issue = Issue.find(params[:time_entry][:issue_id])
+    @hamster = Hamster.my.find(params[:hamster_id])
+    @issue = @hamster.issue
     @project = @issue.project
-    @date = params[:time_entry][:spent_on]
+    @hours = @hamster.spend_time
+    @date = @hamster.start_at.to_date.try(:to_s)
   end
 
   def set_current_user

@@ -66,7 +66,7 @@ class Api::HamstersControllerTest < Redmine::ApiTest::Base
   test '#my_ready_to_raport_hamsters should return proper hamsters' do
     user = User.find_by(login: 'jsmith')
     hamster = Hamster.create(user_id: user.id, issue_id: 2, start_at: Time.now - 2, end_at: Time.now, spend_time: 0.1)
-    get api_hamster_my_ready_to_raport_hamsters_path, {}, { 'X-Redmine-API-Key' => user.api_key }
+    get api_hamster_my_ready_to_report_hamsters_path, {}, { 'X-Redmine-API-Key' => user.api_key }
     response_json = JSON.parse(response.body)[Time.now.strftime('%F')][0]
     assert_response 200
     assert_equal user.id, response_json['user_id']
@@ -114,7 +114,7 @@ class Api::HamstersControllerTest < Redmine::ApiTest::Base
   test '#raport_time should delete proper hamster' do
     user = User.find_by(login: 'jsmith')
     hamster = Hamster.create(user_id: user.id, issue_id: 2, start_at: Time.now - 1.hour, end_at: Time.now, spend_time: 1.0)
-    post api_hamster_raport_time_path, { time_entry: { issue_id: 2, spent_on: Time.now.strftime('%F'), hamster_id: hamster.id, hours: hamster.spend_time } }, { 'X-Redmine-API-Key' => user.api_key }
+    post api_hamster_report_time_path, {hamster_id: hamster.id}, { 'X-Redmine-API-Key' => user.api_key }
     response_json = JSON.parse(response.body)
     assert_response 200
     assert_equal 1.0, TimeEntry.last.hours, "Wrong hours value!"
