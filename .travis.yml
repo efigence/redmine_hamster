@@ -6,10 +6,10 @@ cache:
     - vendor/bundle
     - workspace/redmine/vendor/bundle
 rvm:
+  - 2.2
   - 2.1
-  - 2.0
 env:
-  - REDMINE_VERSION=3.0.3 VERBOSE=no DB=mysql
+  - REDMINE_VERSION=3.3.0 VERBOSE=no DB=mysql
 
 script:
   - export PLUGIN=redmine_hamster
@@ -24,4 +24,3 @@ script:
   - bash -x ./.travis-init.sh -u || exit 1
 before_script:
   - mysql -e 'create database redmine_hamster_test;'
-

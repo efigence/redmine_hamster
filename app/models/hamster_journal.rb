@@ -7,6 +7,8 @@ class HamsterJournal < ActiveRecord::Base
 
   after_destroy :substract_hours_from_hamster
 
+  private
+
   def substract_hours_from_hamster
     h = self.hamster
     h.spend_time = h.spend_time - self.summary.to_f

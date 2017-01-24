@@ -13,6 +13,8 @@ class WorkTime < ActiveRecord::Base
   validates :end_at, presence: true, if: :start_at
   validates :start_at, presence: true, if: :end_at
 
+  private
+
   def invalidate_cache
     Rails.cache.delete("active_issue_for_#{User.current.id}")
   end
