@@ -5,7 +5,7 @@ Redmine::Plugin.register :redmine_hamster do
   name 'Redmine Hamster plugin'
   author 'Marcin Świątkiewicz'
   description "Plugin helps users to control spent time on issue."
-  version '0.0.1'
+  version '1.0.0'
   url 'https://github.com/efigence/redmine_hamster'
   author_url 'http://www.efigence.com/'
 
