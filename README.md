@@ -5,7 +5,7 @@ Plugin helps users to control spent time on issue.
 
 ## Requirements
 
-Developed and tested on Redmine 3.0.3. 
+Redmine 3.x
 
 ## Installation
 
